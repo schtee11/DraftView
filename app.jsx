@@ -16,7 +16,7 @@ function openTweaks() {
 
 function App() {
   const [tweaks, setTweak] = window.useTweaks(TWEAK_DEFAULTS);
-  const [view, setView] = useState('position'); // 'position' | 'team'
+  const [view, setView] = useState('position'); // 'position' | 'team' | 'analysis'
   const [search, setSearch] = useState('');
   const [roundFilter, setRoundFilter] = useState('all'); // 'all' | 1..7
   const [teamFilter, setTeamFilter] = useState('all');
@@ -76,6 +76,13 @@ function App() {
             >
               By Team
             </button>
+            <button
+              className={view === 'analysis' ? 'is-active' : ''}
+              onClick={() => setView('analysis')}
+              role="tab" aria-selected={view === 'analysis'}
+            >
+              Analysis
+            </button>
           </div>
           <button
             type="button"
@@ -98,28 +105,30 @@ function App() {
           />
         </div>
 
-        <div className="round-filter">
-          <span className="round-filter-label">Round</span>
-          <button
-            className={`round-pill all${roundFilter === 'all' ? ' is-active' : ''}`}
-            onClick={() => setRoundFilter('all')}
-          >
-            <span className="swatch"></span>All
-          </button>
-          {ROUNDS.map(r => {
-            const sw = window.roundSwatch(tweaks.palette, r, tweaks.dark);
-            return (
-              <button
-                key={r}
-                className={`round-pill${roundFilter === r ? ' is-active' : ''}`}
-                onClick={() => setRoundFilter(r)}
-              >
-                <span className="swatch" style={{ background: sw.bg }}></span>
-                R{r}
-              </button>
-            );
-          })}
-        </div>
+        {view !== 'analysis' && (
+          <div className="round-filter">
+            <span className="round-filter-label">Round</span>
+            <button
+              className={`round-pill all${roundFilter === 'all' ? ' is-active' : ''}`}
+              onClick={() => setRoundFilter('all')}
+            >
+              <span className="swatch"></span>All
+            </button>
+            {ROUNDS.map(r => {
+              const sw = window.roundSwatch(tweaks.palette, r, tweaks.dark);
+              return (
+                <button
+                  key={r}
+                  className={`round-pill${roundFilter === r ? ' is-active' : ''}`}
+                  onClick={() => setRoundFilter(r)}
+                >
+                  <span className="swatch" style={{ background: sw.bg }}></span>
+                  R{r}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         {view === 'position' && (
           <div className="team-select">
@@ -132,9 +141,11 @@ function App() {
           </div>
         )}
 
-        <div className="results-count">
-          {filteredPicks.length} / {allPicks.length} picks
-        </div>
+        {view !== 'analysis' && (
+          <div className="results-count">
+            {filteredPicks.length} / {allPicks.length} picks
+          </div>
+        )}
       </div>
 
       {view === 'position' && (
@@ -177,6 +188,17 @@ function App() {
           density={tweaks.density}
           selectedTeam={selectedTeam}
           setSelectedTeam={setSelectedTeam}
+          hoverPick={hoverPick}
+          setHoverPick={setHoverPick}
+        />
+      )}
+
+      {view === 'analysis' && (
+        <AnalysisView
+          search={search}
+          palette={tweaks.palette}
+          dark={tweaks.dark}
+          density={tweaks.density}
           hoverPick={hoverPick}
           setHoverPick={setHoverPick}
         />
