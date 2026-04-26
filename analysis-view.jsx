@@ -11,31 +11,39 @@ const { useEffect, useMemo, useState } = React;
 // Derived from round (draft capital) and the team's room state. R1 picks
 // override the room: teams don't draft a 1st-rounder to bench him.
 const ROLE_LABEL = {
-  starter:   'Likely starter',
-  competing: 'Competing for snaps',
-  backup:    'Backup / dev',
+  starter:       'Likely starter',
+  developmental: 'Developmental',
+  competing:     'Competing for snaps',
+  backup:        'Backup / dev',
 };
 const ROLE_COLOR = {
-  starter:   { bg: 'oklch(92% 0.06 145)', fg: 'oklch(35% 0.12 145)' },
-  competing: { bg: 'oklch(92% 0.07 70)',  fg: 'oklch(35% 0.12 55)'  },
-  backup:    { bg: 'oklch(92% 0.05 25)',  fg: 'oklch(40% 0.13 25)'  },
+  starter:       { bg: 'oklch(92% 0.06 145)', fg: 'oklch(35% 0.12 145)' },
+  developmental: { bg: 'oklch(92% 0.06 280)', fg: 'oklch(35% 0.12 280)' },
+  competing:     { bg: 'oklch(92% 0.07 70)',  fg: 'oklch(35% 0.12 55)'  },
+  backup:        { bg: 'oklch(92% 0.05 25)',  fg: 'oklch(40% 0.13 25)'  },
 };
 const ROLE_COLOR_DARK = {
-  starter:   { bg: 'oklch(28% 0.07 145)', fg: 'oklch(82% 0.10 145)' },
-  competing: { bg: 'oklch(28% 0.07 60)',  fg: 'oklch(82% 0.10 65)'  },
-  backup:    { bg: 'oklch(28% 0.07 25)',  fg: 'oklch(82% 0.10 25)'  },
+  starter:       { bg: 'oklch(28% 0.07 145)', fg: 'oklch(82% 0.10 145)' },
+  developmental: { bg: 'oklch(28% 0.07 280)', fg: 'oklch(82% 0.10 280)' },
+  competing:     { bg: 'oklch(28% 0.07 60)',  fg: 'oklch(82% 0.10 65)'  },
+  backup:        { bg: 'oklch(28% 0.07 25)',  fg: 'oklch(82% 0.10 25)'  },
 };
 
-// Round × room → expected role.
-//   R1: always starter.
-//   R2: starter unless the room is locked.
-//   R3: starter only into an open room; otherwise competing.
-//   R4-R7: competing only into an open room; otherwise backup.
-function roleFor(round, roomStatus) {
-  if (round <= 1) return 'starter';
-  if (round === 2) return roomStatus === 'locked' ? 'competing' : 'starter';
-  if (round === 3) return roomStatus === 'open' ? 'starter' : 'competing';
-  return roomStatus === 'open' ? 'competing' : 'backup';
+// Round × room state → expected role.
+//   isElite = the incumbent isn't just employed, they're top-tier in stats.
+//   That blocks even R1/R2 rookies (Stafford-vs-Ty-Simpson case).
+function roleFor(round, roomStatus, isElite) {
+  if (round <= 1) return isElite ? 'developmental' : 'starter';
+  if (round === 2) {
+    if (isElite) return 'developmental';
+    return roomStatus === 'locked' ? 'competing' : 'starter';
+  }
+  if (round === 3) {
+    if (isElite) return 'backup';
+    return roomStatus === 'open' ? 'starter' : 'competing';
+  }
+  // R4–R7
+  return roomStatus === 'open' && !isElite ? 'competing' : 'backup';
 }
 
 const ANALYSIS_POSITIONS = ['QB', 'RB', 'WR', 'TE'];
@@ -46,15 +54,26 @@ const THRESHOLDS = {
   QB_LOCKED_RATING: 95,
   QB_LOCKED_MIN_ATTEMPTS: 300,
   QB_CONTESTED_MIN_ATTEMPTS: 100,
+  // Elite = depth-chart starter who's also putting up top-tier numbers,
+  // not just employed. Blocks even R1/R2 rookies in their first season
+  // (Stafford, Mahomes, Goff caliber).
+  QB_ELITE_MIN_ATTEMPTS: 400,
+  QB_ELITE_MIN_RATING: 95,
   RB_LOCKED_CARRIES_PER_GAME: 14,
   RB_LOCKED_CARRY_SHARE: 0.65,
   RB_CONTESTED_CARRIES_PER_GAME: 6,
   RB_CONTESTED_CARRY_SHARE: 0.40,
+  RB_ELITE_MIN_CARRIES: 250,
+  RB_ELITE_MIN_SHARE: 0.65,
   WR_LOCKED_TARGET_SHARE: 0.22,
   WR_CONTESTED_TARGET_SHARE: 0.12,
+  WR_ELITE_MIN_TARGETS: 130,
+  WR_ELITE_MIN_TARGET_SHARE: 0.25,
   TE_LOCKED_TARGET_SHARE: 0.15,
   TE_LOCKED_MIN_TARGETS: 80,
   TE_CONTESTED_MIN_TARGETS: 40,
+  TE_ELITE_MIN_TARGETS: 100,
+  TE_ELITE_MIN_TARGET_SHARE: 0.18,
 };
 
 const fmt = (n, d = 3) => Number(n).toFixed(d).replace(/\.?0+$/, '');
@@ -85,7 +104,7 @@ function bucketQB(qbs, dcIds) {
     secondary_label: 'att',
     secondary_value: String(p.attempts || 0),
   }));
-  if (!ordered.length) return { status: 'open', starter: null, incumbents: [] };
+  if (!ordered.length) return { status: 'open', starter: null, isElite: false, incumbents: [] };
 
   // Locked if the team has named a QB1 on the depth chart, OR if any player
   // had dominant volume last season (high attempts ≈ entrenched starter).
@@ -98,11 +117,18 @@ function bucketQB(qbs, dcIds) {
   else if ((top.attempts || 0) >= THRESHOLDS.QB_CONTESTED_MIN_ATTEMPTS) status = 'contested';
   else status = 'open';
 
-  return { status, starter: top.name, incumbents };
+  // Elite = depth-chart starter who's also top-tier statistically. Blocks
+  // even R1 rookies in their first season.
+  const dcStarter = hasDcStarter ? qbs.find(p => p.espn_id === dcIds[0]) : top;
+  const isElite = !!dcStarter
+    && (dcStarter.attempts || 0)      >= THRESHOLDS.QB_ELITE_MIN_ATTEMPTS
+    && (dcStarter.passer_rating || 0) >= THRESHOLDS.QB_ELITE_MIN_RATING;
+
+  return { status, starter: top.name, isElite, incumbents };
 }
 
 function bucketRB(rbs, dcIds) {
-  if (!rbs.length) return { status: 'open', starter: null, incumbents: [] };
+  if (!rbs.length) return { status: 'open', starter: null, isElite: false, incumbents: [] };
   const teamCarries = rbs.reduce((s, p) => s + (p.carries || 0), 0);
   const ordered = orderForRoom(rbs, dcIds, 'carries');
   const incumbents = ordered.slice(0, 3).map(p => {
@@ -118,7 +144,7 @@ function bucketRB(rbs, dcIds) {
     };
   });
   const top = ordered[0];
-  if (!top) return { status: 'open', starter: null, incumbents };
+  if (!top) return { status: 'open', starter: null, isElite: false, incumbents };
 
   const hasDcStarter = dcIds.length > 0 && rbs.some(p => p.espn_id === dcIds[0]);
   const games = top.games || 17;
@@ -133,7 +159,15 @@ function bucketRB(rbs, dcIds) {
            carryShare >= THRESHOLDS.RB_CONTESTED_CARRY_SHARE) status = 'contested';
   else status = 'open';
 
-  return { status, starter: top.name, incumbents };
+  // Elite = bell-cow incumbent (Bijan, Henry, Saquon caliber).
+  const dcStarter = hasDcStarter ? rbs.find(p => p.espn_id === dcIds[0]) : top;
+  const dcCarries = dcStarter?.carries || 0;
+  const dcShare = teamCarries ? dcCarries / teamCarries : 0;
+  const isElite = !!dcStarter
+    && dcCarries >= THRESHOLDS.RB_ELITE_MIN_CARRIES
+    && dcShare   >= THRESHOLDS.RB_ELITE_MIN_SHARE;
+
+  return { status, starter: top.name, isElite, incumbents };
 }
 
 // Target share is computed dynamically from the players passed in (which are
@@ -154,7 +188,7 @@ function bucketWR(wrs, dcIds) {
     };
   });
   const top = ordered[0];
-  if (!top) return { status: 'open', starter: null, incumbents: [] };
+  if (!top) return { status: 'open', starter: null, isElite: false, incumbents: [] };
 
   const hasDcStarter = dcIds.length > 0 && wrs.some(p => p.espn_id === dcIds[0]);
   const ts = teamTargets ? (top.targets || 0) / teamTargets : 0;
@@ -165,7 +199,15 @@ function bucketWR(wrs, dcIds) {
   else if (ts >= THRESHOLDS.WR_CONTESTED_TARGET_SHARE) status = 'contested';
   else status = 'open';
 
-  return { status, starter: top.name, incumbents };
+  // Elite = true alpha WR1 (CeeDee, JJ, Chase caliber).
+  const dcStarter = hasDcStarter ? wrs.find(p => p.espn_id === dcIds[0]) : top;
+  const dcTargets = dcStarter?.targets || 0;
+  const dcShare = teamTargets ? dcTargets / teamTargets : 0;
+  const isElite = !!dcStarter
+    && dcTargets >= THRESHOLDS.WR_ELITE_MIN_TARGETS
+    && dcShare   >= THRESHOLDS.WR_ELITE_MIN_TARGET_SHARE;
+
+  return { status, starter: top.name, isElite, incumbents };
 }
 
 function bucketTE(tes, dcIds) {
@@ -182,7 +224,7 @@ function bucketTE(tes, dcIds) {
     };
   });
   const top = ordered[0];
-  if (!top) return { status: 'open', starter: null, incumbents: [] };
+  if (!top) return { status: 'open', starter: null, isElite: false, incumbents: [] };
 
   const hasDcStarter = dcIds.length > 0 && tes.some(p => p.espn_id === dcIds[0]);
   const ts = teamTargets ? (top.targets || 0) / teamTargets : 0;
@@ -195,7 +237,15 @@ function bucketTE(tes, dcIds) {
   else if (t >= THRESHOLDS.TE_CONTESTED_MIN_TARGETS) status = 'contested';
   else status = 'open';
 
-  return { status, starter: top.name, incumbents };
+  // Elite = LaPorta / Kittle / Bowers caliber (true TE1, not just employed).
+  const dcStarter = hasDcStarter ? tes.find(p => p.espn_id === dcIds[0]) : top;
+  const dcTargets = dcStarter?.targets || 0;
+  const dcShare = teamTargets ? dcTargets / teamTargets : 0;
+  const isElite = !!dcStarter
+    && dcTargets >= THRESHOLDS.TE_ELITE_MIN_TARGETS
+    && dcShare   >= THRESHOLDS.TE_ELITE_MIN_TARGET_SHARE;
+
+  return { status, starter: top.name, isElite, incumbents };
 }
 
 const BUCKETER = { QB: bucketQB, RB: bucketRB, WR: bucketWR, TE: bucketTE };
@@ -425,7 +475,7 @@ const AnalysisView = ({ search, palette, dark, hoverPick, setHoverPick }) => {
           const teamCode = p.team === 'NEP' ? 'NE' : p.team;
           const team = teams[teamCode];
           const room = rooms[teamCode]?.[p.pos] || { status: 'open', incumbents: [] };
-          const role = roleFor(p.round, room.status);
+          const role = roleFor(p.round, room.status, room.isElite);
           const swatch = window.roundSwatch(palette, p.round, dark);
           const rc = roleColor(role);
           const key = `${p.pick}-${p.name}-${p.team}`;
@@ -494,13 +544,20 @@ const AnalysisView = ({ search, palette, dark, hoverPick, setHoverPick }) => {
       <div className="analysis-legend">
         <div className="analysis-legend-title">How role is determined</div>
         <div className="analysis-legend-body">
-          The badge reflects the rookie's expected Year-1 path, not the team's room.
-          {' '}<strong>R1</strong> picks are always <strong>Likely starter</strong> regardless of incumbent.
-          {' '}<strong>R2</strong> stays starter unless the room is locked.
-          {' '}<strong>R3</strong> needs an open room to start.
-          {' '}<strong>R4-R7</strong> need an open room just to compete; otherwise they're projected as backups.
-          {' '}Hover the badge to see the underlying room state. Rosters and stats both from ESPN, season{' '}
-          <strong>{stats.statsSeason}</strong>: passer rating for QBs, carries+share for RBs, target share for WR/TE.
+          The badge reflects the rookie's expected Year-1 path, combining round
+          with the incumbent's depth-chart standing and stats.
+          {' '}<strong>R1</strong> picks are <strong>Likely starter</strong> — unless the
+          incumbent is statistically elite (top-tier volume + efficiency), in which case
+          the rookie sits as <strong>Developmental</strong> (Ty Simpson behind Stafford,
+          Jordan Love behind Rodgers).
+          {' '}<strong>R2</strong> mirrors R1 but drops to <strong>Competing</strong> in
+          locked-by-name rooms (entrenched but not elite).
+          {' '}<strong>R3</strong> needs an open room to start; otherwise competing,
+          and backup behind elite incumbents.
+          {' '}<strong>R4-R7</strong> need an open room just to compete; everything
+          else is backup.
+          {' '}Rosters + depth charts live from ESPN; stats from ESPN season{' '}
+          <strong>{stats.statsSeason}</strong>.
         </div>
       </div>
     </div>
