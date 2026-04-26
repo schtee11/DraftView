@@ -136,36 +136,28 @@ async function main() {
       // an incumbent (volume thresholds in the bucketer filter them out).
       if (DEBUG) console.error(`  ! ${p.name} (${p.espn_id}): ${e.message}`);
     }
-    // One-time structural audit of ESPN's response: print top-level keys
-    // and the path of every nested `stats` array we find. Tells us exactly
-    // where the player's per-stat values live without dumping a giant blob.
+    // Print categories with their labels/names + a sample stat object so we
+    // can see how ESPN keys the values (positional? by name? by abbreviation?).
     if (!firstRawDump && json) {
       firstRawDump = true;
       log(`=== ESPN response audit: ${p.name} (espn_id ${p.espn_id}) ===`);
       log(`top-level keys: ${Object.keys(json).join(', ')}`);
-      const found = [];
-      const walk = (node, path) => {
-        if (!node || typeof node !== 'object') return;
-        if (Array.isArray(node)) {
-          node.forEach((it, i) => walk(it, `${path}[${i}]`));
-          return;
-        }
-        if (Array.isArray(node.stats) && node.stats.length) {
-          const sampleNames = node.stats.slice(0, 6).map(s => s?.name).filter(Boolean);
-          found.push({ path: path || '<root>', count: node.stats.length, sample: sampleNames });
-        }
-        for (const k of Object.keys(node)) walk(node[k], path ? `${path}.${k}` : k);
-      };
-      walk(json, '');
-      if (found.length === 0) {
-        log('  no `stats` arrays found anywhere in the response.');
-        log(`  full JSON (truncated):`);
-        console.log(JSON.stringify(json).slice(0, 8000));
-      } else {
-        for (const f of found) {
-          log(`  stats[] at path: ${f.path}  (${f.count} items)`);
-          log(`    sample names: ${f.sample.join(', ')}`);
-        }
+      const cats = json.categories || [];
+      cats.forEach((cat, i) => {
+        log(`categories[${i}] name=${cat.name || cat.displayName || '?'}`);
+        const labels = cat.labels || cat.names || cat.abbreviations || cat.displayNames;
+        if (labels) log(`  labels: ${JSON.stringify(labels).slice(0, 400)}`);
+        (cat.statistics || []).forEach((ss, j) => {
+          log(`  statistics[${j}] season=${JSON.stringify(ss.season || ss.team || {})}`);
+          if (Array.isArray(ss.stats) && ss.stats.length) {
+            log(`    stats[0]: ${JSON.stringify(ss.stats[0]).slice(0, 300)}`);
+            log(`    stats[1]: ${JSON.stringify(ss.stats[1]).slice(0, 300)}`);
+            log(`    stats[2]: ${JSON.stringify(ss.stats[2]).slice(0, 300)}`);
+          }
+        });
+      });
+      if (json.glossary) {
+        log(`glossary[0..2]: ${JSON.stringify((json.glossary || []).slice(0, 3)).slice(0, 500)}`);
       }
       log('=== end audit ===');
     }
