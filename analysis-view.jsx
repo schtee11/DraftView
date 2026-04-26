@@ -67,13 +67,18 @@ const THRESHOLDS = {
   RB_ELITE_MIN_SHARE: 0.65,
   WR_LOCKED_TARGET_SHARE: 0.22,
   WR_CONTESTED_TARGET_SHARE: 0.12,
-  WR_ELITE_MIN_TARGETS: 130,
-  WR_ELITE_MIN_TARGET_SHARE: 0.25,
+  // Elite WRs are filtered by yards-per-game, not target share. A bad
+  // offense's slot WR (Wan'Dale Robinson at 40% share) clears most
+  // share-based gates; AJ Brown on a balanced offense (31% share) doesn't.
+  // Yards captures both volume AND efficiency so the alpha receivers
+  // surface even when targets are spread across multiple weapons.
+  WR_ELITE_MIN_YPG: 70,
+  WR_ELITE_MIN_GAMES: 6,
   TE_LOCKED_TARGET_SHARE: 0.15,
   TE_LOCKED_MIN_TARGETS: 80,
   TE_CONTESTED_MIN_TARGETS: 40,
-  TE_ELITE_MIN_TARGETS: 100,
-  TE_ELITE_MIN_TARGET_SHARE: 0.18,
+  TE_ELITE_MIN_YPG: 50,
+  TE_ELITE_MIN_GAMES: 6,
 };
 
 const fmt = (n, d = 3) => Number(n).toFixed(d).replace(/\.?0+$/, '');
@@ -199,13 +204,14 @@ function bucketWR(wrs, dcIds) {
   else if (ts >= THRESHOLDS.WR_CONTESTED_TARGET_SHARE) status = 'contested';
   else status = 'open';
 
-  // Elite = true alpha WR1 (CeeDee, JJ, Chase caliber).
+  // Elite = true alpha WR1 (CeeDee, JJ, Chase, AJ Brown caliber).
+  // Receiving yards per game catches them even when target share is split.
   const dcStarter = hasDcStarter ? wrs.find(p => p.espn_id === dcIds[0]) : top;
-  const dcTargets = dcStarter?.targets || 0;
-  const dcShare = teamTargets ? dcTargets / teamTargets : 0;
+  const dcGames = dcStarter?.games || 0;
+  const dcYpg = dcGames ? (dcStarter.receiving_yards || 0) / dcGames : 0;
   const isElite = !!dcStarter
-    && dcTargets >= THRESHOLDS.WR_ELITE_MIN_TARGETS
-    && dcShare   >= THRESHOLDS.WR_ELITE_MIN_TARGET_SHARE;
+    && dcGames >= THRESHOLDS.WR_ELITE_MIN_GAMES
+    && dcYpg   >= THRESHOLDS.WR_ELITE_MIN_YPG;
 
   return { status, starter: top.name, isElite, incumbents };
 }
@@ -239,11 +245,11 @@ function bucketTE(tes, dcIds) {
 
   // Elite = LaPorta / Kittle / Bowers caliber (true TE1, not just employed).
   const dcStarter = hasDcStarter ? tes.find(p => p.espn_id === dcIds[0]) : top;
-  const dcTargets = dcStarter?.targets || 0;
-  const dcShare = teamTargets ? dcTargets / teamTargets : 0;
+  const dcGames = dcStarter?.games || 0;
+  const dcYpg = dcGames ? (dcStarter.receiving_yards || 0) / dcGames : 0;
   const isElite = !!dcStarter
-    && dcTargets >= THRESHOLDS.TE_ELITE_MIN_TARGETS
-    && dcShare   >= THRESHOLDS.TE_ELITE_MIN_TARGET_SHARE;
+    && dcGames >= THRESHOLDS.TE_ELITE_MIN_GAMES
+    && dcYpg   >= THRESHOLDS.TE_ELITE_MIN_YPG;
 
   return { status, starter: top.name, isElite, incumbents };
 }
@@ -570,6 +576,8 @@ const AnalysisView = ({ search, palette, dark, hoverPick, setHoverPick }) => {
           and backup behind elite incumbents.
           {' '}<strong>R4-R7</strong> need an open room just to compete; everything
           else is backup.
+          {' '}"Elite" thresholds: QB ≥400 att with ≥95 rating; RB ≥250 carries with
+          ≥65% share; WR ≥70 receiving yds/game; TE ≥50 receiving yds/game.
           {' '}Rosters + depth charts live from ESPN; stats from ESPN season{' '}
           <strong>{stats.statsSeason}</strong>.
         </div>

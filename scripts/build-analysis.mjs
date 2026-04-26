@@ -176,8 +176,11 @@ async function main() {
       attempts: e.attempts,
       sacks_suffered: e.sacks_suffered,
       passer_rating: +Number(e.passer_rating).toFixed(1),
+      passing_yards: e.passing_yards,
       carries: e.carries,
+      rushing_yards: e.rushing_yards,
       targets: e.targets,
+      receiving_yards: e.receiving_yards,
     };
   }
   log(`  ${Object.keys(byEspnId).length} entries written to stats.js`);
