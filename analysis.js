@@ -8,7 +8,9 @@ window.ANALYSIS_DATA = {
     "QB_LOCKED_MIN_DROPBACKS": 300,
     "QB_CONTESTED_MIN_DROPBACKS": 100,
     "RB_LOCKED_CARRIES_PER_GAME": 14,
+    "RB_LOCKED_CARRY_SHARE": 0.65,
     "RB_CONTESTED_CARRIES_PER_GAME": 6,
+    "RB_CONTESTED_CARRY_SHARE": 0.4,
     "WR_LOCKED_TARGET_SHARE": 0.22,
     "WR_CONTESTED_TARGET_SHARE": 0.12,
     "TE_LOCKED_TARGET_SHARE": 0.15,
@@ -24,9 +26,10 @@ window.ANALYSIS_DATA = {
         "dropbacks": 571
       },
       "RB": {
-        "status": "locked",
+        "status": "contested",
         "starter": "James Conner",
         "carries_per_game": 14.8,
+        "carry_share": 0.636,
         "carries": 236
       },
       "WR": {
@@ -53,6 +56,7 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Bijan Robinson",
         "carries_per_game": 17.9,
+        "carry_share": 0.67,
         "carries": 304
       },
       "WR": {
@@ -79,6 +83,7 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Derrick Henry",
         "carries_per_game": 19.1,
+        "carry_share": 0.819,
         "carries": 325
       },
       "WR": {
@@ -105,6 +110,7 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "James Cook",
         "carries_per_game": 12.9,
+        "carry_share": 0.569,
         "carries": 207
       },
       "WR": {
@@ -131,6 +137,7 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Chuba Hubbard",
         "carries_per_game": 16.7,
+        "carry_share": 0.725,
         "carries": 250
       },
       "WR": {
@@ -157,6 +164,7 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "D'Andre Swift",
         "carries_per_game": 14.9,
+        "carry_share": 0.798,
         "carries": 253
       },
       "WR": {
@@ -183,6 +191,7 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Chase Brown",
         "carries_per_game": 14.3,
+        "carry_share": 0.676,
         "carries": 229
       },
       "WR": {
@@ -209,6 +218,7 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Jerome Ford",
         "carries_per_game": 7.4,
+        "carry_share": 0.338,
         "carries": 104
       },
       "WR": {
@@ -235,6 +245,7 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Rico Dowdle",
         "carries_per_game": 14.7,
+        "carry_share": 0.679,
         "carries": 235
       },
       "WR": {
@@ -261,6 +272,7 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Javonte Williams",
         "carries_per_game": 8.2,
+        "carry_share": 0.397,
         "carries": 139
       },
       "WR": {
@@ -284,9 +296,10 @@ window.ANALYSIS_DATA = {
         "dropbacks": 570
       },
       "RB": {
-        "status": "locked",
+        "status": "contested",
         "starter": "Jahmyr Gibbs",
         "carries_per_game": 14.7,
+        "carry_share": 0.523,
         "carries": 250
       },
       "WR": {
@@ -313,6 +326,7 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Josh Jacobs",
         "carries_per_game": 17.7,
+        "carry_share": 0.675,
         "carries": 301
       },
       "WR": {
@@ -339,6 +353,7 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Joe Mixon",
         "carries_per_game": 17.5,
+        "carry_share": 0.752,
         "carries": 245
       },
       "WR": {
@@ -365,6 +380,7 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Jonathan Taylor",
         "carries_per_game": 21.6,
+        "carry_share": 0.775,
         "carries": 303
       },
       "WR": {
@@ -391,6 +407,7 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Tank Bigsby",
         "carries_per_game": 10.5,
+        "carry_share": 0.48,
         "carries": 168
       },
       "WR": {
@@ -414,9 +431,10 @@ window.ANALYSIS_DATA = {
         "dropbacks": 617
       },
       "RB": {
-        "status": "locked",
+        "status": "contested",
         "starter": "Kareem Hunt",
         "carries_per_game": 15.4,
+        "carry_share": 0.557,
         "carries": 200
       },
       "WR": {
@@ -440,9 +458,10 @@ window.ANALYSIS_DATA = {
         "dropbacks": 545
       },
       "RB": {
-        "status": "locked",
+        "status": "contested",
         "starter": "J.K. Dobbins",
         "carries_per_game": 15,
+        "carry_share": 0.523,
         "carries": 195
       },
       "WR": {
@@ -469,6 +488,7 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Kyren Williams",
         "carries_per_game": 19.8,
+        "carry_share": 0.796,
         "carries": 316
       },
       "WR": {
@@ -495,6 +515,7 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Alexander Mattison",
         "carries_per_game": 9.4,
+        "carry_share": 0.426,
         "carries": 132
       },
       "WR": {
@@ -521,6 +542,7 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Devon Achane",
         "carries_per_game": 11.9,
+        "carry_share": 0.531,
         "carries": 203
       },
       "WR": {
@@ -544,9 +566,10 @@ window.ANALYSIS_DATA = {
         "dropbacks": 593
       },
       "RB": {
-        "status": "locked",
+        "status": "contested",
         "starter": "Aaron Jones",
         "carries_per_game": 15,
+        "carry_share": 0.607,
         "carries": 255
       },
       "WR": {
@@ -573,6 +596,7 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Rhamondre Stevenson",
         "carries_per_game": 13.8,
+        "carry_share": 0.575,
         "carries": 207
       },
       "WR": {
@@ -599,6 +623,7 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Alvin Kamara",
         "carries_per_game": 16.3,
+        "carry_share": 0.655,
         "carries": 228
       },
       "WR": {
@@ -625,6 +650,7 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Tyrone Tracy",
         "carries_per_game": 11.3,
+        "carry_share": 0.602,
         "carries": 192
       },
       "WR": {
@@ -651,6 +677,7 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Breece Hall",
         "carries_per_game": 13.1,
+        "carry_share": 0.631,
         "carries": 209
       },
       "WR": {
@@ -677,6 +704,7 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Saquon Barkley",
         "carries_per_game": 21.6,
+        "carry_share": 0.762,
         "carries": 345
       },
       "WR": {
@@ -700,9 +728,10 @@ window.ANALYSIS_DATA = {
         "dropbacks": 369
       },
       "RB": {
-        "status": "locked",
+        "status": "contested",
         "starter": "Najee Harris",
         "carries_per_game": 15.5,
+        "carry_share": 0.617,
         "carries": 263
       },
       "WR": {
@@ -729,6 +758,7 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Kenneth Walker",
         "carries_per_game": 13.9,
+        "carry_share": 0.475,
         "carries": 153
       },
       "WR": {
@@ -755,6 +785,7 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Jordan Mason",
         "carries_per_game": 12.8,
+        "carry_share": 0.459,
         "carries": 153
       },
       "WR": {
@@ -781,6 +812,7 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Bucky Irving",
         "carries_per_game": 12.2,
+        "carry_share": 0.516,
         "carries": 207
       },
       "WR": {
@@ -807,6 +839,7 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Tony Pollard",
         "carries_per_game": 16.3,
+        "carry_share": 0.708,
         "carries": 260
       },
       "WR": {
@@ -833,6 +866,7 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Brian Robinson",
         "carries_per_game": 13.4,
+        "carry_share": 0.528,
         "carries": 187
       },
       "WR": {
@@ -1029,13 +1063,13 @@ window.ANALYSIS_DATA = {
       "school": "Notre Dame",
       "team": "ARI",
       "pos": "RB",
-      "roomStatus": "locked",
+      "roomStatus": "contested",
       "starter": "James Conner",
       "draftCapital": 1,
-      "roomFactor": 0.2,
-      "score": 0.2,
-      "grade": "D",
-      "rationale": "Locked behind James Conner — limited Year-1 path."
+      "roomFactor": 0.6,
+      "score": 0.6,
+      "grade": "B",
+      "rationale": "Contested room (vs James Conner) — competing for snaps."
     },
     {
       "key": "1.32-Jadarian Price-SEA",
@@ -1114,13 +1148,13 @@ window.ANALYSIS_DATA = {
       "school": "Nebraska",
       "team": "KC",
       "pos": "RB",
-      "roomStatus": "locked",
+      "roomStatus": "contested",
       "starter": "Kareem Hunt",
       "draftCapital": 0.2,
-      "roomFactor": 0.2,
-      "score": 0.04,
+      "roomFactor": 0.6,
+      "score": 0.12,
       "grade": "D",
-      "rationale": "Locked behind Kareem Hunt — limited Year-1 path."
+      "rationale": "Contested room (vs Kareem Hunt) — competing for snaps."
     },
     {
       "key": "5.165-Nicholas Singleton-TEN",
@@ -1182,13 +1216,13 @@ window.ANALYSIS_DATA = {
       "school": "Wake Forest",
       "team": "MIN",
       "pos": "RB",
-      "roomStatus": "locked",
+      "roomStatus": "contested",
       "starter": "Aaron Jones",
       "draftCapital": 0.1,
-      "roomFactor": 0.2,
-      "score": 0.02,
+      "roomFactor": 0.6,
+      "score": 0.06,
       "grade": "D",
-      "rationale": "Locked behind Aaron Jones — limited Year-1 path."
+      "rationale": "Contested room (vs Aaron Jones) — competing for snaps."
     },
     {
       "key": "7.230-Eli Heidenreich-PIT",
@@ -1199,13 +1233,13 @@ window.ANALYSIS_DATA = {
       "school": "Navy",
       "team": "PIT",
       "pos": "RB",
-      "roomStatus": "locked",
+      "roomStatus": "contested",
       "starter": "Najee Harris",
       "draftCapital": 0.1,
-      "roomFactor": 0.2,
-      "score": 0.02,
+      "roomFactor": 0.6,
+      "score": 0.06,
       "grade": "D",
-      "rationale": "Locked behind Najee Harris — limited Year-1 path."
+      "rationale": "Contested room (vs Najee Harris) — competing for snaps."
     },
     {
       "key": "7.237-Seth McGowan-SEA",

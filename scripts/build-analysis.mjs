@@ -27,9 +27,11 @@ const THRESHOLDS = {
   QB_LOCKED_EPA_PER_DB: 0.05,
   QB_LOCKED_MIN_DROPBACKS: 300,
   QB_CONTESTED_MIN_DROPBACKS: 100,
-  // RB (carries / game across a 17-game season)
+  // RB — locked needs both volume AND a concentrated workload (vs committee)
   RB_LOCKED_CARRIES_PER_GAME: 14,
+  RB_LOCKED_CARRY_SHARE: 0.65,
   RB_CONTESTED_CARRIES_PER_GAME: 6,
+  RB_CONTESTED_CARRY_SHARE: 0.40,
   // WR
   WR_LOCKED_TARGET_SHARE: 0.22,
   WR_CONTESTED_TARGET_SHARE: 0.12,
@@ -101,17 +103,25 @@ function bucketQB(qbs) {
 }
 
 function bucketRB(rbs) {
+  if (!rbs.length) return { status: 'open', starter: null };
   const top = topByMetric(rbs, 'carries');
-  if (!top || num(top.carries) === 0) return { status: 'open', starter: null };
+  const teamCarries = rbs.reduce((s, r) => s + num(r.carries), 0);
+  if (!top || teamCarries === 0) return { status: 'open', starter: null };
   const games = num(top.games) || 17;
   const cpg = num(top.carries) / games;
+  const carryShare = num(top.carries) / teamCarries;
+  // Locked requires both heavy volume AND a concentrated workload — a 220-carry
+  // back on a team that also gives 180 carries to a backup is committee, not
+  // bell-cow, and a rookie can break in.
   const status =
-    cpg >= THRESHOLDS.RB_LOCKED_CARRIES_PER_GAME ? 'locked' :
-    cpg >= THRESHOLDS.RB_CONTESTED_CARRIES_PER_GAME ? 'contested' : 'open';
+    cpg >= THRESHOLDS.RB_LOCKED_CARRIES_PER_GAME && carryShare >= THRESHOLDS.RB_LOCKED_CARRY_SHARE ? 'locked' :
+    cpg >= THRESHOLDS.RB_CONTESTED_CARRIES_PER_GAME || carryShare >= THRESHOLDS.RB_CONTESTED_CARRY_SHARE ? 'contested' :
+    'open';
   return {
     status,
     starter: top.player_display_name,
     carries_per_game: +cpg.toFixed(1),
+    carry_share: +carryShare.toFixed(3),
     carries: num(top.carries),
   };
 }
