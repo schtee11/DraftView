@@ -41,9 +41,11 @@ function roleFor(round, roomStatus) {
 const ANALYSIS_POSITIONS = ['QB', 'RB', 'WR', 'TE'];
 
 const THRESHOLDS = {
-  QB_LOCKED_EPA_PER_DB: 0.05,
-  QB_LOCKED_MIN_DROPBACKS: 300,
-  QB_CONTESTED_MIN_DROPBACKS: 100,
+  // QB — passer rating is the ESPN-available proxy for EPA/dropback.
+  // ~95 rating ≈ above-average starter; 300+ attempts implies full-time.
+  QB_LOCKED_RATING: 95,
+  QB_LOCKED_MIN_ATTEMPTS: 300,
+  QB_CONTESTED_MIN_ATTEMPTS: 100,
   RB_LOCKED_CARRIES_PER_GAME: 14,
   RB_LOCKED_CARRY_SHARE: 0.65,
   RB_CONTESTED_CARRIES_PER_GAME: 6,
@@ -60,24 +62,20 @@ const fmt = (n, d = 3) => Number(n).toFixed(d).replace(/\.?0+$/, '');
 // ── Bucketers (mirror scripts/build-analysis.mjs) ───────────────────────────
 function bucketQB(qbs) {
   const sorted = [...qbs].sort((a, b) => (b.attempts || 0) - (a.attempts || 0));
-  const incumbents = sorted.filter(p => (p.attempts || 0) >= 50).slice(0, 3).map(p => {
-    const db = (p.attempts || 0) + (p.sacks_suffered || 0);
-    const epaDb = db ? p.passing_epa / db : 0;
-    return {
-      name: p.name,
-      primary_label: 'EPA/db',
-      primary_value: fmt(epaDb, 3),
-      secondary_label: 'dropbacks',
-      secondary_value: String(db),
-    };
-  });
+  const incumbents = sorted.filter(p => (p.attempts || 0) >= 50).slice(0, 3).map(p => ({
+    name: p.name,
+    primary_label: 'Rtg',
+    primary_value: fmt(p.passer_rating || 0, 1),
+    secondary_label: 'att',
+    secondary_value: String(p.attempts || 0),
+  }));
   const top = sorted[0];
   if (!top) return { status: 'open', starter: null, incumbents: [] };
-  const dropbacks = (top.attempts || 0) + (top.sacks_suffered || 0);
-  const epaPerDb = dropbacks > 0 ? top.passing_epa / dropbacks : 0;
+  const att = top.attempts || 0;
+  const rating = top.passer_rating || 0;
   const status =
-    dropbacks >= THRESHOLDS.QB_LOCKED_MIN_DROPBACKS && epaPerDb >= THRESHOLDS.QB_LOCKED_EPA_PER_DB ? 'locked' :
-    dropbacks >= THRESHOLDS.QB_CONTESTED_MIN_DROPBACKS ? 'contested' : 'open';
+    att >= THRESHOLDS.QB_LOCKED_MIN_ATTEMPTS && rating >= THRESHOLDS.QB_LOCKED_RATING ? 'locked' :
+    att >= THRESHOLDS.QB_CONTESTED_MIN_ATTEMPTS ? 'contested' : 'open';
   return { status, starter: top.name, incumbents };
 }
 
@@ -109,18 +107,26 @@ function bucketRB(rbs) {
   return { status, starter: top.name, incumbents };
 }
 
+// Target share is computed dynamically from the players passed in (which are
+// the team's current pass-catchers from ESPN's roster). teamPositionTargets
+// is the denominator: total targets at THIS POSITION on the team, not all
+// pass-catchers combined — we want WR1's share of the WR target pie.
 function bucketWR(wrs) {
-  const sorted = [...wrs].sort((a, b) => (b.target_share || 0) - (a.target_share || 0));
-  const incumbents = sorted.filter(p => (p.targets || 0) >= 40).slice(0, 3).map(p => ({
-    name: p.name,
-    primary_label: 'tgt%',
-    primary_value: `${Math.round((p.target_share || 0) * 100)}%`,
-    secondary_label: 'targets',
-    secondary_value: String(p.targets || 0),
-  }));
+  const teamTargets = wrs.reduce((s, p) => s + (p.targets || 0), 0);
+  const sorted = [...wrs].sort((a, b) => (b.targets || 0) - (a.targets || 0));
+  const incumbents = sorted.filter(p => (p.targets || 0) >= 40).slice(0, 3).map(p => {
+    const share = teamTargets ? (p.targets || 0) / teamTargets : 0;
+    return {
+      name: p.name,
+      primary_label: 'tgt%',
+      primary_value: `${Math.round(share * 100)}%`,
+      secondary_label: 'targets',
+      secondary_value: String(p.targets || 0),
+    };
+  });
   const top = sorted[0];
   if (!top) return { status: 'open', starter: null, incumbents: [] };
-  const ts = top.target_share || 0;
+  const ts = teamTargets ? (top.targets || 0) / teamTargets : 0;
   const status =
     ts >= THRESHOLDS.WR_LOCKED_TARGET_SHARE ? 'locked' :
     ts >= THRESHOLDS.WR_CONTESTED_TARGET_SHARE ? 'contested' : 'open';
@@ -128,17 +134,21 @@ function bucketWR(wrs) {
 }
 
 function bucketTE(tes) {
+  const teamTargets = tes.reduce((s, p) => s + (p.targets || 0), 0);
   const sorted = [...tes].sort((a, b) => (b.targets || 0) - (a.targets || 0));
-  const incumbents = sorted.filter(p => (p.targets || 0) >= 25).slice(0, 2).map(p => ({
-    name: p.name,
-    primary_label: 'tgt%',
-    primary_value: `${Math.round((p.target_share || 0) * 100)}%`,
-    secondary_label: 'targets',
-    secondary_value: String(p.targets || 0),
-  }));
+  const incumbents = sorted.filter(p => (p.targets || 0) >= 25).slice(0, 2).map(p => {
+    const share = teamTargets ? (p.targets || 0) / teamTargets : 0;
+    return {
+      name: p.name,
+      primary_label: 'tgt%',
+      primary_value: `${Math.round(share * 100)}%`,
+      secondary_label: 'targets',
+      secondary_value: String(p.targets || 0),
+    };
+  });
   const top = sorted[0];
   if (!top) return { status: 'open', starter: null, incumbents: [] };
-  const ts = top.target_share || 0;
+  const ts = teamTargets ? (top.targets || 0) / teamTargets : 0;
   const t = top.targets || 0;
   const status =
     ts >= THRESHOLDS.TE_LOCKED_TARGET_SHARE && t >= THRESHOLDS.TE_LOCKED_MIN_TARGETS ? 'locked' :
@@ -270,7 +280,7 @@ const AnalysisView = ({ search, palette, dark, hoverPick, setHoverPick }) => {
         </div>
         <div>
           <span className="analysis-meta-label">Stats</span>
-          <span className="analysis-meta-value">nflverse {stats.statsSeason}</span>
+          <span className="analysis-meta-value">ESPN {stats.statsSeason}</span>
         </div>
         <div>
           <span className="analysis-meta-label">Loaded</span>
@@ -382,8 +392,8 @@ const AnalysisView = ({ search, palette, dark, hoverPick, setHoverPick }) => {
           {' '}<strong>R2</strong> stays starter unless the room is locked.
           {' '}<strong>R3</strong> needs an open room to start.
           {' '}<strong>R4-R7</strong> need an open room just to compete; otherwise they're projected as backups.
-          {' '}Hover the badge to see the underlying room state. Rosters live from ESPN; stats from nflverse{' '}
-          <strong>{stats.statsSeason}</strong>.
+          {' '}Hover the badge to see the underlying room state. Rosters and stats both from ESPN, season{' '}
+          <strong>{stats.statsSeason}</strong>: passer rating for QBs, carries+share for RBs, target share for WR/TE.
         </div>
       </div>
     </div>
