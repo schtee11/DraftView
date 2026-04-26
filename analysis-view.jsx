@@ -7,17 +7,36 @@
 
 const { useEffect, useMemo, useState } = React;
 
-const STATUS_LABEL = { open: 'Open', contested: 'Contested', locked: 'Locked' };
-const STATUS_COLOR = {
-  open:      { bg: 'oklch(92% 0.06 145)', fg: 'oklch(35% 0.12 145)' },
-  contested: { bg: 'oklch(92% 0.07 70)',  fg: 'oklch(35% 0.12 55)'  },
-  locked:    { bg: 'oklch(92% 0.05 25)',  fg: 'oklch(40% 0.13 25)'  },
+// Rookie role — what we think the rookie's Year-1 path looks like.
+// Derived from round (draft capital) and the team's room state. R1 picks
+// override the room: teams don't draft a 1st-rounder to bench him.
+const ROLE_LABEL = {
+  starter:   'Likely starter',
+  competing: 'Competing for snaps',
+  backup:    'Backup / dev',
 };
-const STATUS_COLOR_DARK = {
-  open:      { bg: 'oklch(28% 0.07 145)', fg: 'oklch(82% 0.10 145)' },
-  contested: { bg: 'oklch(28% 0.07 60)',  fg: 'oklch(82% 0.10 65)'  },
-  locked:    { bg: 'oklch(28% 0.07 25)',  fg: 'oklch(82% 0.10 25)'  },
+const ROLE_COLOR = {
+  starter:   { bg: 'oklch(92% 0.06 145)', fg: 'oklch(35% 0.12 145)' },
+  competing: { bg: 'oklch(92% 0.07 70)',  fg: 'oklch(35% 0.12 55)'  },
+  backup:    { bg: 'oklch(92% 0.05 25)',  fg: 'oklch(40% 0.13 25)'  },
 };
+const ROLE_COLOR_DARK = {
+  starter:   { bg: 'oklch(28% 0.07 145)', fg: 'oklch(82% 0.10 145)' },
+  competing: { bg: 'oklch(28% 0.07 60)',  fg: 'oklch(82% 0.10 65)'  },
+  backup:    { bg: 'oklch(28% 0.07 25)',  fg: 'oklch(82% 0.10 25)'  },
+};
+
+// Round × room → expected role.
+//   R1: always starter.
+//   R2: starter unless the room is locked.
+//   R3: starter only into an open room; otherwise competing.
+//   R4-R7: competing only into an open room; otherwise backup.
+function roleFor(round, roomStatus) {
+  if (round <= 1) return 'starter';
+  if (round === 2) return roomStatus === 'locked' ? 'competing' : 'starter';
+  if (round === 3) return roomStatus === 'open' ? 'starter' : 'competing';
+  return roomStatus === 'open' ? 'competing' : 'backup';
+}
 
 const ANALYSIS_POSITIONS = ['QB', 'RB', 'WR', 'TE'];
 
@@ -239,8 +258,8 @@ const AnalysisView = ({ search, palette, dark, hoverPick, setHoverPick }) => {
     .filter(p => posFilter === 'all' || p.pos === posFilter)
     .sort((a, b) => a.overall - b.overall);
 
-  const statusColor = (status) =>
-    (dark ? STATUS_COLOR_DARK : STATUS_COLOR)[status] || STATUS_COLOR.open;
+  const roleColor = (role) =>
+    (dark ? ROLE_COLOR_DARK : ROLE_COLOR)[role] || ROLE_COLOR.competing;
 
   return (
     <div className="analysis-view">
@@ -289,8 +308,9 @@ const AnalysisView = ({ search, palette, dark, hoverPick, setHoverPick }) => {
           const teamCode = p.team === 'NEP' ? 'NE' : p.team;
           const team = teams[teamCode];
           const room = rooms[teamCode]?.[p.pos] || { status: 'open', incumbents: [] };
+          const role = roleFor(p.round, room.status);
           const swatch = window.roundSwatch(palette, p.round, dark);
-          const sc = statusColor(room.status);
+          const rc = roleColor(role);
           const key = `${p.pick}-${p.name}-${p.team}`;
           const isHover = hoverPick === key;
           const incumbents = room.incumbents || [];
@@ -324,8 +344,9 @@ const AnalysisView = ({ search, palette, dark, hoverPick, setHoverPick }) => {
                   </div>
                   <span
                     className="dc-status"
-                    style={{ background: sc.bg, color: sc.fg }}
-                  >{STATUS_LABEL[room.status]}</span>
+                    style={{ background: rc.bg, color: rc.fg }}
+                    title={`${p.pos} room is ${room.status}`}
+                  >{ROLE_LABEL[role]}</span>
                 </div>
                 {incumbents.length > 0 ? (
                   <ol className="dc-incumbents">
@@ -354,13 +375,15 @@ const AnalysisView = ({ search, palette, dark, hoverPick, setHoverPick }) => {
       </div>
 
       <div className="analysis-legend">
-        <div className="analysis-legend-title">About this view</div>
+        <div className="analysis-legend-title">How role is determined</div>
         <div className="analysis-legend-body">
-          Rosters fetch live from ESPN at page load. Stats come from nflverse{' '}
-          <strong>{stats.statsSeason}</strong>. <strong>Open</strong> = nobody locked in;{' '}
-          <strong>Contested</strong> = real competition for snaps;{' '}
-          <strong>Locked</strong> = entrenched starter. Stats: EPA/dropback for QBs,
-          carries/game + share for RBs, target share for WR/TE.
+          The badge reflects the rookie's expected Year-1 path, not the team's room.
+          {' '}<strong>R1</strong> picks are always <strong>Likely starter</strong> regardless of incumbent.
+          {' '}<strong>R2</strong> stays starter unless the room is locked.
+          {' '}<strong>R3</strong> needs an open room to start.
+          {' '}<strong>R4-R7</strong> need an open room just to compete; otherwise they're projected as backups.
+          {' '}Hover the badge to see the underlying room state. Rosters live from ESPN; stats from nflverse{' '}
+          <strong>{stats.statsSeason}</strong>.
         </div>
       </div>
     </div>
