@@ -60,30 +60,52 @@ const THRESHOLDS = {
 const fmt = (n, d = 3) => Number(n).toFixed(d).replace(/\.?0+$/, '');
 
 // ── Bucketers (mirror scripts/build-analysis.mjs) ───────────────────────────
-function bucketQB(qbs) {
-  const sorted = [...qbs].sort((a, b) => (b.attempts || 0) - (a.attempts || 0));
-  const incumbents = sorted.filter(p => (p.attempts || 0) >= 50).slice(0, 3).map(p => ({
+// Order players by depth-chart rank first, then by stats volume for anyone
+// not on the chart. Returns the array used for both the incumbents display
+// and the bucketing decision.
+function orderForRoom(players, dcIds, statKey) {
+  const byId = Object.fromEntries(players.map(p => [p.espn_id, p]));
+  const ordered = [];
+  const seen = new Set();
+  for (const id of dcIds) {
+    if (byId[id]) { ordered.push(byId[id]); seen.add(id); }
+  }
+  const rest = players.filter(p => !seen.has(p.espn_id))
+    .sort((a, b) => (b[statKey] || 0) - (a[statKey] || 0));
+  ordered.push(...rest);
+  return ordered;
+}
+
+function bucketQB(qbs, dcIds) {
+  const ordered = orderForRoom(qbs, dcIds, 'attempts');
+  const incumbents = ordered.slice(0, 3).map(p => ({
     name: p.name,
     primary_label: 'Rtg',
     primary_value: fmt(p.passer_rating || 0, 1),
     secondary_label: 'att',
     secondary_value: String(p.attempts || 0),
   }));
-  const top = sorted[0];
-  if (!top) return { status: 'open', starter: null, incumbents: [] };
-  const att = top.attempts || 0;
-  const rating = top.passer_rating || 0;
-  const status =
-    att >= THRESHOLDS.QB_LOCKED_MIN_ATTEMPTS && rating >= THRESHOLDS.QB_LOCKED_RATING ? 'locked' :
-    att >= THRESHOLDS.QB_CONTESTED_MIN_ATTEMPTS ? 'contested' : 'open';
+  if (!ordered.length) return { status: 'open', starter: null, incumbents: [] };
+
+  // Locked if the team has named a QB1 on the depth chart, OR if any player
+  // had dominant volume last season (high attempts ≈ entrenched starter).
+  const hasDcStarter = dcIds.length > 0 && qbs.some(p => p.espn_id === dcIds[0]);
+  const topByVolume = ordered[0] && (ordered[0].attempts || 0) >= THRESHOLDS.QB_LOCKED_MIN_ATTEMPTS;
+  const top = ordered[0];
+
+  let status;
+  if (hasDcStarter || topByVolume) status = 'locked';
+  else if ((top.attempts || 0) >= THRESHOLDS.QB_CONTESTED_MIN_ATTEMPTS) status = 'contested';
+  else status = 'open';
+
   return { status, starter: top.name, incumbents };
 }
 
-function bucketRB(rbs) {
+function bucketRB(rbs, dcIds) {
   if (!rbs.length) return { status: 'open', starter: null, incumbents: [] };
   const teamCarries = rbs.reduce((s, p) => s + (p.carries || 0), 0);
-  const sorted = [...rbs].sort((a, b) => (b.carries || 0) - (a.carries || 0));
-  const incumbents = sorted.filter(p => (p.carries || 0) >= 30).slice(0, 3).map(p => {
+  const ordered = orderForRoom(rbs, dcIds, 'carries');
+  const incumbents = ordered.slice(0, 3).map(p => {
     const games = p.games || 17;
     const cpg = (p.carries || 0) / games;
     const share = teamCarries ? (p.carries || 0) / teamCarries : 0;
@@ -95,15 +117,22 @@ function bucketRB(rbs) {
       secondary_value: `${Math.round(share * 100)}%`,
     };
   });
-  const top = sorted[0];
-  if (!top || teamCarries === 0) return { status: 'open', starter: null, incumbents };
+  const top = ordered[0];
+  if (!top) return { status: 'open', starter: null, incumbents };
+
+  const hasDcStarter = dcIds.length > 0 && rbs.some(p => p.espn_id === dcIds[0]);
   const games = top.games || 17;
   const cpg = (top.carries || 0) / games;
-  const carryShare = (top.carries || 0) / teamCarries;
-  const status =
-    cpg >= THRESHOLDS.RB_LOCKED_CARRIES_PER_GAME && carryShare >= THRESHOLDS.RB_LOCKED_CARRY_SHARE ? 'locked' :
-    cpg >= THRESHOLDS.RB_CONTESTED_CARRIES_PER_GAME || carryShare >= THRESHOLDS.RB_CONTESTED_CARRY_SHARE ? 'contested' :
-    'open';
+  const carryShare = teamCarries ? (top.carries || 0) / teamCarries : 0;
+  const topByVolume = cpg >= THRESHOLDS.RB_LOCKED_CARRIES_PER_GAME
+                   && carryShare >= THRESHOLDS.RB_LOCKED_CARRY_SHARE;
+
+  let status;
+  if (hasDcStarter || topByVolume) status = 'locked';
+  else if (cpg >= THRESHOLDS.RB_CONTESTED_CARRIES_PER_GAME ||
+           carryShare >= THRESHOLDS.RB_CONTESTED_CARRY_SHARE) status = 'contested';
+  else status = 'open';
+
   return { status, starter: top.name, incumbents };
 }
 
@@ -111,10 +140,10 @@ function bucketRB(rbs) {
 // the team's current pass-catchers from ESPN's roster). teamPositionTargets
 // is the denominator: total targets at THIS POSITION on the team, not all
 // pass-catchers combined — we want WR1's share of the WR target pie.
-function bucketWR(wrs) {
+function bucketWR(wrs, dcIds) {
   const teamTargets = wrs.reduce((s, p) => s + (p.targets || 0), 0);
-  const sorted = [...wrs].sort((a, b) => (b.targets || 0) - (a.targets || 0));
-  const incumbents = sorted.filter(p => (p.targets || 0) >= 40).slice(0, 3).map(p => {
+  const ordered = orderForRoom(wrs, dcIds, 'targets');
+  const incumbents = ordered.slice(0, 3).map(p => {
     const share = teamTargets ? (p.targets || 0) / teamTargets : 0;
     return {
       name: p.name,
@@ -124,19 +153,25 @@ function bucketWR(wrs) {
       secondary_value: String(p.targets || 0),
     };
   });
-  const top = sorted[0];
+  const top = ordered[0];
   if (!top) return { status: 'open', starter: null, incumbents: [] };
+
+  const hasDcStarter = dcIds.length > 0 && wrs.some(p => p.espn_id === dcIds[0]);
   const ts = teamTargets ? (top.targets || 0) / teamTargets : 0;
-  const status =
-    ts >= THRESHOLDS.WR_LOCKED_TARGET_SHARE ? 'locked' :
-    ts >= THRESHOLDS.WR_CONTESTED_TARGET_SHARE ? 'contested' : 'open';
+  const topByVolume = ts >= THRESHOLDS.WR_LOCKED_TARGET_SHARE;
+
+  let status;
+  if (hasDcStarter || topByVolume) status = 'locked';
+  else if (ts >= THRESHOLDS.WR_CONTESTED_TARGET_SHARE) status = 'contested';
+  else status = 'open';
+
   return { status, starter: top.name, incumbents };
 }
 
-function bucketTE(tes) {
+function bucketTE(tes, dcIds) {
   const teamTargets = tes.reduce((s, p) => s + (p.targets || 0), 0);
-  const sorted = [...tes].sort((a, b) => (b.targets || 0) - (a.targets || 0));
-  const incumbents = sorted.filter(p => (p.targets || 0) >= 25).slice(0, 2).map(p => {
+  const ordered = orderForRoom(tes, dcIds, 'targets');
+  const incumbents = ordered.slice(0, 2).map(p => {
     const share = teamTargets ? (p.targets || 0) / teamTargets : 0;
     return {
       name: p.name,
@@ -146,13 +181,20 @@ function bucketTE(tes) {
       secondary_value: String(p.targets || 0),
     };
   });
-  const top = sorted[0];
+  const top = ordered[0];
   if (!top) return { status: 'open', starter: null, incumbents: [] };
+
+  const hasDcStarter = dcIds.length > 0 && tes.some(p => p.espn_id === dcIds[0]);
   const ts = teamTargets ? (top.targets || 0) / teamTargets : 0;
   const t = top.targets || 0;
-  const status =
-    ts >= THRESHOLDS.TE_LOCKED_TARGET_SHARE && t >= THRESHOLDS.TE_LOCKED_MIN_TARGETS ? 'locked' :
-    t >= THRESHOLDS.TE_CONTESTED_MIN_TARGETS ? 'contested' : 'open';
+  const topByVolume = ts >= THRESHOLDS.TE_LOCKED_TARGET_SHARE
+                   && t  >= THRESHOLDS.TE_LOCKED_MIN_TARGETS;
+
+  let status;
+  if (hasDcStarter || topByVolume) status = 'locked';
+  else if (t >= THRESHOLDS.TE_CONTESTED_MIN_TARGETS) status = 'contested';
+  else status = 'open';
+
   return { status, starter: top.name, incumbents };
 }
 
@@ -161,6 +203,8 @@ const BUCKETER = { QB: bucketQB, RB: bucketRB, WR: bucketWR, TE: bucketTE };
 // ── ESPN fetch ──────────────────────────────────────────────────────────────
 const ESPN_ROSTER = (slug) =>
   `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${slug}/roster`;
+const ESPN_DEPTHCHART = (slug) =>
+  `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${slug}/depthchart`;
 
 async function fetchTeamRoster(slug) {
   const r = await fetch(ESPN_ROSTER(slug));
@@ -177,14 +221,66 @@ async function fetchTeamRoster(slug) {
     }));
 }
 
-function buildRoom(currentRoster, position, statsLookup) {
-  const players = currentRoster
+// Returns { QB: [espn_id_in_rank_order], RB: [...], WR: [...], TE: [...] }.
+// Walks the response defensively — ESPN's depth-chart shape varies between
+// teams and we'd rather degrade gracefully than throw on an unfamiliar key.
+async function fetchTeamDepthChart(slug, dumpFirst) {
+  let json = null;
+  try {
+    const r = await fetch(ESPN_DEPTHCHART(slug));
+    if (!r.ok) return null;
+    json = await r.json();
+  } catch {
+    return null;
+  }
+  if (dumpFirst && json) {
+    console.log(`[depthchart sample ${slug}]`, json);
+  }
+
+  const out = { QB: [], RB: [], WR: [], TE: [] };
+
+  // Strategy: find every nested `athletes` array under a positionally-named
+  // parent and bucket its items by ESPN's position.abbreviation. Handles
+  // multiple known shapes (items[].positions{}, items[]{positions:[]}, etc.)
+  const visit = (node) => {
+    if (!node || typeof node !== 'object') return;
+    if (Array.isArray(node)) { node.forEach(visit); return; }
+    if (Array.isArray(node.athletes)) {
+      const posAbbr =
+        node?.position?.abbreviation ||
+        node?.position?.parent?.abbreviation ||
+        node?.abbreviation ||
+        node?.name;
+      const grp = (posAbbr || '').toString().toUpperCase().replace(/\d+$/, '');
+      if (['QB','RB','WR','TE'].includes(grp)) {
+        const sorted = [...node.athletes].sort(
+          (a, b) => (Number(a.rank) || 99) - (Number(b.rank) || 99)
+        );
+        for (const a of sorted) {
+          const id = String(a?.athlete?.id || a?.id || '');
+          if (id && !out[grp].includes(id)) out[grp].push(id);
+        }
+      }
+    }
+    for (const k of Object.keys(node)) visit(node[k]);
+  };
+  visit(json);
+  return out;
+}
+
+// Build a room by combining the live roster, the depth chart, and the static
+// stats lookup. Depth chart wins on ordering (it's the team's official
+// answer); stats are still used for the secondary "is anyone dominant?"
+// signal and for the per-incumbent display.
+function buildRoom(roster, depthChart, position, statsLookup) {
+  const players = roster
     .filter(p => p.position === position)
     .map(p => {
       const s = statsLookup[p.espn_id];
-      return s ? { ...s, name: p.name } : { name: p.name, position, games: 0 };
+      return { ...(s || { games: 0 }), espn_id: p.espn_id, name: p.name, position };
     });
-  return BUCKETER[position](players);
+  const dcIds = depthChart?.[position] || [];
+  return BUCKETER[position](players, dcIds);
 }
 
 // ── Component ──────────────────────────────────────────────────────────────
@@ -192,23 +288,29 @@ const AnalysisView = ({ search, palette, dark, hoverPick, setHoverPick }) => {
   const stats = window.STATS;
   const teams = window.DRAFT_DATA.teams;
   const [posFilter, setPosFilter] = useState('all');
-  const [rosters, setRosters] = useState(null);   // { TEAM_CODE: [{...players}] }
+  // teamData: { TEAM_CODE: { roster: [...], depthChart: { QB:[ids], RB:[], WR:[], TE:[] } } }
+  const [teamData, setTeamData] = useState(null);
   const [error, setError] = useState(null);
   const [loadedAt, setLoadedAt] = useState(null);
 
-  // Fetch live rosters once on mount.
+  // Fetch live rosters AND depth charts in parallel.
   useEffect(() => {
     let cancelled = false;
     (async () => {
       const codes = Object.keys(teams).filter(c => c !== 'NEP');
       try {
+        let dumped = false;
         const results = await Promise.all(codes.map(async code => {
           const slug = teams[code].espn;
-          const roster = await fetchTeamRoster(slug);
-          return [code, roster];
+          const [roster, depthChart] = await Promise.all([
+            fetchTeamRoster(slug),
+            fetchTeamDepthChart(slug, !dumped),
+          ]);
+          if (!dumped && depthChart) dumped = true;
+          return [code, { roster, depthChart: depthChart || { QB: [], RB: [], WR: [], TE: [] } }];
         }));
         if (cancelled) return;
-        setRosters(Object.fromEntries(results));
+        setTeamData(Object.fromEntries(results));
         setLoadedAt(new Date());
       } catch (e) {
         if (!cancelled) setError(e.message);
@@ -218,16 +320,21 @@ const AnalysisView = ({ search, palette, dark, hoverPick, setHoverPick }) => {
   }, [teams]);
 
   const rooms = useMemo(() => {
-    if (!rosters || !stats) return null;
+    if (!teamData || !stats) return null;
     const out = {};
-    for (const code of Object.keys(rosters)) {
+    for (const code of Object.keys(teamData)) {
       out[code] = {};
       for (const pos of ANALYSIS_POSITIONS) {
-        out[code][pos] = buildRoom(rosters[code], pos, stats.byEspnId);
+        out[code][pos] = buildRoom(
+          teamData[code].roster,
+          teamData[code].depthChart,
+          pos,
+          stats.byEspnId
+        );
       }
     }
     return out;
-  }, [rosters, stats]);
+  }, [teamData, stats]);
 
   if (!stats) {
     return (
@@ -255,7 +362,7 @@ const AnalysisView = ({ search, palette, dark, hoverPick, setHoverPick }) => {
   if (!rooms) {
     return (
       <div className="analysis-empty">
-        <div className="team-empty-text">Loading current rosters from ESPN…</div>
+        <div className="team-empty-text">Loading rosters and depth charts from ESPN…</div>
         <div className="team-empty-sub" style={{ marginTop: 8 }}>32 teams in flight</div>
       </div>
     );
