@@ -126,6 +126,7 @@ async function main() {
   const t0 = Date.now();
   let done = 0;
   let firstSample = null;
+  let firstRawDump = false;
   const enriched = await pool(allPlayers, CONCURRENCY, async (p) => {
     let json = null;
     try {
@@ -134,6 +135,14 @@ async function main() {
       // Non-fatal; missing stats just means the player won't surface as
       // an incumbent (volume thresholds in the bucketer filter them out).
       if (DEBUG) console.error(`  ! ${p.name} (${p.espn_id}): ${e.message}`);
+    }
+    // One-time dump of the raw API response so we can audit ESPN's actual
+    // field names if the validation step says we're parsing zeros.
+    if (!firstRawDump && json) {
+      firstRawDump = true;
+      log(`=== sample raw response: ${p.name} (espn_id ${p.espn_id}) ===`);
+      console.log(JSON.stringify(json).slice(0, 6000));
+      log('=== end sample ===');
     }
     const flat = flattenStats(json);
     const stats = extractStats(flat, p.position);
