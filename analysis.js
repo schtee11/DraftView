@@ -23,26 +23,98 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Kyler Murray",
         "epa_per_dropback": 0.115,
-        "dropbacks": 571
+        "dropbacks": 571,
+        "incumbents": [
+          {
+            "name": "Kyler Murray",
+            "games": 17,
+            "primary_label": "EPA/db",
+            "primary_value": "0.115",
+            "secondary_label": "dropbacks",
+            "secondary_value": "571"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "James Conner",
         "carries_per_game": 14.8,
         "carry_share": 0.636,
-        "carries": 236
+        "carries": 236,
+        "incumbents": [
+          {
+            "name": "James Conner",
+            "games": 16,
+            "primary_label": "car/g",
+            "primary_value": "14.8",
+            "secondary_label": "share",
+            "secondary_value": "64%"
+          },
+          {
+            "name": "Trey Benson",
+            "games": 12,
+            "primary_label": "car/g",
+            "primary_value": "5.3",
+            "secondary_label": "share",
+            "secondary_value": "17%"
+          },
+          {
+            "name": "Michael Carter",
+            "games": 3,
+            "primary_label": "car/g",
+            "primary_value": "11.7",
+            "secondary_label": "share",
+            "secondary_value": "9%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Marvin Harrison",
         "target_share": 0.222,
-        "targets": 116
+        "targets": 116,
+        "incumbents": [
+          {
+            "name": "Marvin Harrison",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "22%",
+            "secondary_label": "targets",
+            "secondary_value": "116"
+          },
+          {
+            "name": "Michael Wilson",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "14%",
+            "secondary_label": "targets",
+            "secondary_value": "71"
+          },
+          {
+            "name": "Greg Dortch",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "10%",
+            "secondary_label": "targets",
+            "secondary_value": "50"
+          }
+        ]
       },
       "TE": {
         "status": "locked",
         "starter": "Trey McBride",
         "target_share": 0.281,
-        "targets": 147
+        "targets": 147,
+        "incumbents": [
+          {
+            "name": "Trey McBride",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "28%",
+            "secondary_label": "targets",
+            "secondary_value": "147"
+          }
+        ]
       }
     },
     "ATL": {
@@ -50,26 +122,98 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Kirk Cousins",
         "epa_per_dropback": 0.044,
-        "dropbacks": 481
+        "dropbacks": 481,
+        "incumbents": [
+          {
+            "name": "Kirk Cousins",
+            "games": 14,
+            "primary_label": "EPA/db",
+            "primary_value": "0.044",
+            "secondary_label": "dropbacks",
+            "secondary_value": "481"
+          },
+          {
+            "name": "Michael Penix",
+            "games": 5,
+            "primary_label": "EPA/db",
+            "primary_value": "0.134",
+            "secondary_label": "dropbacks",
+            "secondary_value": "109"
+          }
+        ]
       },
       "RB": {
         "status": "locked",
         "starter": "Bijan Robinson",
         "carries_per_game": 17.9,
         "carry_share": 0.67,
-        "carries": 304
+        "carries": 304,
+        "incumbents": [
+          {
+            "name": "Bijan Robinson",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "17.9",
+            "secondary_label": "share",
+            "secondary_value": "67%"
+          },
+          {
+            "name": "Tyler Allgeier",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "8.1",
+            "secondary_label": "share",
+            "secondary_value": "30%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Drake London",
         "target_share": 0.293,
-        "targets": 158
+        "targets": 158,
+        "incumbents": [
+          {
+            "name": "Drake London",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "29%",
+            "secondary_label": "targets",
+            "secondary_value": "158"
+          },
+          {
+            "name": "Darnell Mooney",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "20%",
+            "secondary_label": "targets",
+            "secondary_value": "106"
+          },
+          {
+            "name": "Ray-Ray McCloud",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "16%",
+            "secondary_label": "targets",
+            "secondary_value": "87"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Kyle Pitts",
         "target_share": 0.137,
-        "targets": 74
+        "targets": 74,
+        "incumbents": [
+          {
+            "name": "Kyle Pitts",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "14%",
+            "secondary_label": "targets",
+            "secondary_value": "74"
+          }
+        ]
       }
     },
     "BAL": {
@@ -77,26 +221,90 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Lamar Jackson",
         "epa_per_dropback": 0.347,
-        "dropbacks": 497
+        "dropbacks": 497,
+        "incumbents": [
+          {
+            "name": "Lamar Jackson",
+            "games": 17,
+            "primary_label": "EPA/db",
+            "primary_value": "0.347",
+            "secondary_label": "dropbacks",
+            "secondary_value": "497"
+          }
+        ]
       },
       "RB": {
         "status": "locked",
         "starter": "Derrick Henry",
         "carries_per_game": 19.1,
         "carry_share": 0.819,
-        "carries": 325
+        "carries": 325,
+        "incumbents": [
+          {
+            "name": "Derrick Henry",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "19.1",
+            "secondary_label": "share",
+            "secondary_value": "82%"
+          },
+          {
+            "name": "Justice Hill",
+            "games": 15,
+            "primary_label": "car/g",
+            "primary_value": "3.1",
+            "secondary_label": "share",
+            "secondary_value": "12%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Zay Flowers",
         "target_share": 0.254,
-        "targets": 116
+        "targets": 116,
+        "incumbents": [
+          {
+            "name": "Zay Flowers",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "25%",
+            "secondary_label": "targets",
+            "secondary_value": "116"
+          },
+          {
+            "name": "Rashod Bateman",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "16%",
+            "secondary_label": "targets",
+            "secondary_value": "72"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Mark Andrews",
         "target_share": 0.151,
-        "targets": 69
+        "targets": 69,
+        "incumbents": [
+          {
+            "name": "Mark Andrews",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "15%",
+            "secondary_label": "targets",
+            "secondary_value": "69"
+          },
+          {
+            "name": "Isaiah Likely",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "13%",
+            "secondary_label": "targets",
+            "secondary_value": "58"
+          }
+        ]
       }
     },
     "BUF": {
@@ -104,26 +312,106 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Josh Allen",
         "epa_per_dropback": 0.262,
-        "dropbacks": 497
+        "dropbacks": 497,
+        "incumbents": [
+          {
+            "name": "Josh Allen",
+            "games": 16,
+            "primary_label": "EPA/db",
+            "primary_value": "0.262",
+            "secondary_label": "dropbacks",
+            "secondary_value": "497"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "James Cook",
         "carries_per_game": 12.9,
         "carry_share": 0.569,
-        "carries": 207
+        "carries": 207,
+        "incumbents": [
+          {
+            "name": "James Cook",
+            "games": 16,
+            "primary_label": "car/g",
+            "primary_value": "12.9",
+            "secondary_label": "share",
+            "secondary_value": "57%"
+          },
+          {
+            "name": "Ray Davis",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "6.6",
+            "secondary_label": "share",
+            "secondary_value": "31%"
+          },
+          {
+            "name": "Ty Johnson",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "2.4",
+            "secondary_label": "share",
+            "secondary_value": "11%"
+          }
+        ]
       },
       "WR": {
         "status": "contested",
         "starter": "Khalil Shakir",
         "target_share": 0.202,
-        "targets": 100
+        "targets": 100,
+        "incumbents": [
+          {
+            "name": "Khalil Shakir",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "20%",
+            "secondary_label": "targets",
+            "secondary_value": "100"
+          },
+          {
+            "name": "Amari Cooper",
+            "games": 13,
+            "primary_label": "tgt%",
+            "primary_value": "13%",
+            "secondary_label": "targets",
+            "secondary_value": "85"
+          },
+          {
+            "name": "Keon Coleman",
+            "games": 13,
+            "primary_label": "tgt%",
+            "primary_value": "12%",
+            "secondary_label": "targets",
+            "secondary_value": "57"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Dalton Kincaid",
         "target_share": 0.152,
-        "targets": 75
+        "targets": 75,
+        "incumbents": [
+          {
+            "name": "Dalton Kincaid",
+            "games": 13,
+            "primary_label": "tgt%",
+            "primary_value": "15%",
+            "secondary_label": "targets",
+            "secondary_value": "75"
+          },
+          {
+            "name": "Dawson Knox",
+            "games": 14,
+            "primary_label": "tgt%",
+            "primary_value": "7%",
+            "secondary_label": "targets",
+            "secondary_value": "33"
+          }
+        ]
       }
     },
     "CAR": {
@@ -131,26 +419,106 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Bryce Young",
         "epa_per_dropback": -0.063,
-        "dropbacks": 413
+        "dropbacks": 413,
+        "incumbents": [
+          {
+            "name": "Bryce Young",
+            "games": 14,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.063",
+            "secondary_label": "dropbacks",
+            "secondary_value": "413"
+          },
+          {
+            "name": "Andy Dalton",
+            "games": 6,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.114",
+            "secondary_label": "dropbacks",
+            "secondary_value": "167"
+          }
+        ]
       },
       "RB": {
         "status": "locked",
         "starter": "Chuba Hubbard",
         "carries_per_game": 16.7,
         "carry_share": 0.725,
-        "carries": 250
+        "carries": 250,
+        "incumbents": [
+          {
+            "name": "Chuba Hubbard",
+            "games": 15,
+            "primary_label": "car/g",
+            "primary_value": "16.7",
+            "secondary_label": "share",
+            "secondary_value": "72%"
+          },
+          {
+            "name": "Miles Sanders",
+            "games": 11,
+            "primary_label": "car/g",
+            "primary_value": "5",
+            "secondary_label": "share",
+            "secondary_value": "16%"
+          }
+        ]
       },
       "WR": {
         "status": "contested",
         "starter": "Xavier Legette",
         "target_share": 0.162,
-        "targets": 84
+        "targets": 84,
+        "incumbents": [
+          {
+            "name": "Xavier Legette",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "16%",
+            "secondary_label": "targets",
+            "secondary_value": "84"
+          },
+          {
+            "name": "Adam Thielen",
+            "games": 10,
+            "primary_label": "tgt%",
+            "primary_value": "12%",
+            "secondary_label": "targets",
+            "secondary_value": "62"
+          },
+          {
+            "name": "David Moore",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "11%",
+            "secondary_label": "targets",
+            "secondary_value": "57"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Ja'Tavion Sanders",
         "target_share": 0.083,
-        "targets": 43
+        "targets": 43,
+        "incumbents": [
+          {
+            "name": "Ja'Tavion Sanders",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "8%",
+            "secondary_label": "targets",
+            "secondary_value": "43"
+          },
+          {
+            "name": "Tommy Tremble",
+            "games": 10,
+            "primary_label": "tgt%",
+            "primary_value": "6%",
+            "secondary_label": "targets",
+            "secondary_value": "32"
+          }
+        ]
       }
     },
     "CHI": {
@@ -158,26 +526,90 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Caleb Williams",
         "epa_per_dropback": -0.075,
-        "dropbacks": 630
+        "dropbacks": 630,
+        "incumbents": [
+          {
+            "name": "Caleb Williams",
+            "games": 17,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.075",
+            "secondary_label": "dropbacks",
+            "secondary_value": "630"
+          }
+        ]
       },
       "RB": {
         "status": "locked",
         "starter": "D'Andre Swift",
         "carries_per_game": 14.9,
         "carry_share": 0.798,
-        "carries": 253
+        "carries": 253,
+        "incumbents": [
+          {
+            "name": "D'Andre Swift",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "14.9",
+            "secondary_label": "share",
+            "secondary_value": "80%"
+          },
+          {
+            "name": "Roschon Johnson",
+            "games": 13,
+            "primary_label": "car/g",
+            "primary_value": "4.2",
+            "secondary_label": "share",
+            "secondary_value": "17%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "D.J. Moore",
         "target_share": 0.266,
-        "targets": 140
+        "targets": 140,
+        "incumbents": [
+          {
+            "name": "D.J. Moore",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "27%",
+            "secondary_label": "targets",
+            "secondary_value": "140"
+          },
+          {
+            "name": "Keenan Allen",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "23%",
+            "secondary_label": "targets",
+            "secondary_value": "121"
+          },
+          {
+            "name": "Rome Odunze",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "19%",
+            "secondary_label": "targets",
+            "secondary_value": "101"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Cole Kmet",
         "target_share": 0.105,
-        "targets": 55
+        "targets": 55,
+        "incumbents": [
+          {
+            "name": "Cole Kmet",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "10%",
+            "secondary_label": "targets",
+            "secondary_value": "55"
+          }
+        ]
       }
     },
     "CIN": {
@@ -185,26 +617,98 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Joe Burrow",
         "epa_per_dropback": 0.164,
-        "dropbacks": 700
+        "dropbacks": 700,
+        "incumbents": [
+          {
+            "name": "Joe Burrow",
+            "games": 17,
+            "primary_label": "EPA/db",
+            "primary_value": "0.164",
+            "secondary_label": "dropbacks",
+            "secondary_value": "700"
+          }
+        ]
       },
       "RB": {
         "status": "locked",
         "starter": "Chase Brown",
         "carries_per_game": 14.3,
         "carry_share": 0.676,
-        "carries": 229
+        "carries": 229,
+        "incumbents": [
+          {
+            "name": "Chase Brown",
+            "games": 16,
+            "primary_label": "car/g",
+            "primary_value": "14.3",
+            "secondary_label": "share",
+            "secondary_value": "68%"
+          },
+          {
+            "name": "Zack Moss",
+            "games": 8,
+            "primary_label": "car/g",
+            "primary_value": "9.3",
+            "secondary_label": "share",
+            "secondary_value": "22%"
+          },
+          {
+            "name": "Khalil Herbert",
+            "games": 11,
+            "primary_label": "car/g",
+            "primary_value": "3.3",
+            "secondary_label": "share",
+            "secondary_value": "11%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Ja'Marr Chase",
         "target_share": 0.279,
-        "targets": 175
+        "targets": 175,
+        "incumbents": [
+          {
+            "name": "Ja'Marr Chase",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "28%",
+            "secondary_label": "targets",
+            "secondary_value": "175"
+          },
+          {
+            "name": "Tee Higgins",
+            "games": 12,
+            "primary_label": "tgt%",
+            "primary_value": "17%",
+            "secondary_label": "targets",
+            "secondary_value": "109"
+          },
+          {
+            "name": "Andrei Iosivas",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "10%",
+            "secondary_label": "targets",
+            "secondary_value": "61"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Mike Gesicki",
         "target_share": 0.132,
-        "targets": 83
+        "targets": 83,
+        "incumbents": [
+          {
+            "name": "Mike Gesicki",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "13%",
+            "secondary_label": "targets",
+            "secondary_value": "83"
+          }
+        ]
       }
     },
     "CLE": {
@@ -212,26 +716,122 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Jameis Winston",
         "epa_per_dropback": -0.08,
-        "dropbacks": 320
+        "dropbacks": 320,
+        "incumbents": [
+          {
+            "name": "Jameis Winston",
+            "games": 11,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.08",
+            "secondary_label": "dropbacks",
+            "secondary_value": "320"
+          },
+          {
+            "name": "Deshaun Watson",
+            "games": 7,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.247",
+            "secondary_label": "dropbacks",
+            "secondary_value": "249"
+          },
+          {
+            "name": "Dorian Thompson-Robinson",
+            "games": 6,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.565",
+            "secondary_label": "dropbacks",
+            "secondary_value": "126"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "Jerome Ford",
         "carries_per_game": 7.4,
         "carry_share": 0.338,
-        "carries": 104
+        "carries": 104,
+        "incumbents": [
+          {
+            "name": "Jerome Ford",
+            "games": 14,
+            "primary_label": "car/g",
+            "primary_value": "7.4",
+            "secondary_label": "share",
+            "secondary_value": "34%"
+          },
+          {
+            "name": "Nick Chubb",
+            "games": 8,
+            "primary_label": "car/g",
+            "primary_value": "12.8",
+            "secondary_label": "share",
+            "secondary_value": "33%"
+          },
+          {
+            "name": "D'Onta Foreman",
+            "games": 10,
+            "primary_label": "car/g",
+            "primary_value": "7.1",
+            "secondary_label": "share",
+            "secondary_value": "23%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Jerry Jeudy",
         "target_share": 0.229,
-        "targets": 145
+        "targets": 145,
+        "incumbents": [
+          {
+            "name": "Jerry Jeudy",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "23%",
+            "secondary_label": "targets",
+            "secondary_value": "145"
+          },
+          {
+            "name": "Elijah Moore",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "16%",
+            "secondary_label": "targets",
+            "secondary_value": "102"
+          },
+          {
+            "name": "Cedric Tillman",
+            "games": 9,
+            "primary_label": "tgt%",
+            "primary_value": "8%",
+            "secondary_label": "targets",
+            "secondary_value": "49"
+          }
+        ]
       },
       "TE": {
         "status": "locked",
         "starter": "David Njoku",
         "target_share": 0.153,
-        "targets": 97
+        "targets": 97,
+        "incumbents": [
+          {
+            "name": "David Njoku",
+            "games": 11,
+            "primary_label": "tgt%",
+            "primary_value": "15%",
+            "secondary_label": "targets",
+            "secondary_value": "97"
+          },
+          {
+            "name": "Jordan Akins",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "9%",
+            "secondary_label": "targets",
+            "secondary_value": "58"
+          }
+        ]
       }
     },
     "DAL": {
@@ -239,26 +839,106 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Cooper Rush",
         "epa_per_dropback": -0.071,
-        "dropbacks": 321
+        "dropbacks": 321,
+        "incumbents": [
+          {
+            "name": "Cooper Rush",
+            "games": 12,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.071",
+            "secondary_label": "dropbacks",
+            "secondary_value": "321"
+          },
+          {
+            "name": "Dak Prescott",
+            "games": 8,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.03",
+            "secondary_label": "dropbacks",
+            "secondary_value": "307"
+          }
+        ]
       },
       "RB": {
         "status": "locked",
         "starter": "Rico Dowdle",
         "carries_per_game": 14.7,
         "carry_share": 0.679,
-        "carries": 235
+        "carries": 235,
+        "incumbents": [
+          {
+            "name": "Rico Dowdle",
+            "games": 16,
+            "primary_label": "car/g",
+            "primary_value": "14.7",
+            "secondary_label": "share",
+            "secondary_value": "68%"
+          },
+          {
+            "name": "Ezekiel Elliott",
+            "games": 15,
+            "primary_label": "car/g",
+            "primary_value": "4.9",
+            "secondary_label": "share",
+            "secondary_value": "21%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "CeeDee Lamb",
         "target_share": 0.244,
-        "targets": 152
+        "targets": 152,
+        "incumbents": [
+          {
+            "name": "CeeDee Lamb",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "24%",
+            "secondary_label": "targets",
+            "secondary_value": "152"
+          },
+          {
+            "name": "Jalen Tolbert",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "13%",
+            "secondary_label": "targets",
+            "secondary_value": "79"
+          },
+          {
+            "name": "Brandin Cooks",
+            "games": 10,
+            "primary_label": "tgt%",
+            "primary_value": "9%",
+            "secondary_label": "targets",
+            "secondary_value": "54"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Jake Ferguson",
         "target_share": 0.138,
-        "targets": 86
+        "targets": 86,
+        "incumbents": [
+          {
+            "name": "Jake Ferguson",
+            "games": 14,
+            "primary_label": "tgt%",
+            "primary_value": "14%",
+            "secondary_label": "targets",
+            "secondary_value": "86"
+          },
+          {
+            "name": "Luke Schoonmaker",
+            "games": 12,
+            "primary_label": "tgt%",
+            "primary_value": "6%",
+            "secondary_label": "targets",
+            "secondary_value": "36"
+          }
+        ]
       }
     },
     "DEN": {
@@ -266,26 +946,89 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Bo Nix",
         "epa_per_dropback": 0.058,
-        "dropbacks": 591
+        "dropbacks": 591,
+        "incumbents": [
+          {
+            "name": "Bo Nix",
+            "games": 17,
+            "primary_label": "EPA/db",
+            "primary_value": "0.058",
+            "secondary_label": "dropbacks",
+            "secondary_value": "591"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "Javonte Williams",
         "carries_per_game": 8.2,
         "carry_share": 0.397,
-        "carries": 139
+        "carries": 139,
+        "incumbents": [
+          {
+            "name": "Javonte Williams",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "8.2",
+            "secondary_label": "share",
+            "secondary_value": "40%"
+          },
+          {
+            "name": "Jaleel McLaughlin",
+            "games": 16,
+            "primary_label": "car/g",
+            "primary_value": "7.1",
+            "secondary_label": "share",
+            "secondary_value": "32%"
+          },
+          {
+            "name": "Audric Estime",
+            "games": 13,
+            "primary_label": "car/g",
+            "primary_value": "5.8",
+            "secondary_label": "share",
+            "secondary_value": "22%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Courtland Sutton",
         "target_share": 0.246,
-        "targets": 135
+        "targets": 135,
+        "incumbents": [
+          {
+            "name": "Courtland Sutton",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "25%",
+            "secondary_label": "targets",
+            "secondary_value": "135"
+          },
+          {
+            "name": "Devaughn Vele",
+            "games": 13,
+            "primary_label": "tgt%",
+            "primary_value": "10%",
+            "secondary_label": "targets",
+            "secondary_value": "55"
+          },
+          {
+            "name": "Troy Franklin",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "10%",
+            "secondary_label": "targets",
+            "secondary_value": "53"
+          }
+        ]
       },
       "TE": {
         "status": "open",
         "starter": "Lucas Krull",
         "target_share": 0.042,
-        "targets": 23
+        "targets": 23,
+        "incumbents": []
       }
     },
     "DET": {
@@ -293,26 +1036,98 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Jared Goff",
         "epa_per_dropback": 0.296,
-        "dropbacks": 570
+        "dropbacks": 570,
+        "incumbents": [
+          {
+            "name": "Jared Goff",
+            "games": 17,
+            "primary_label": "EPA/db",
+            "primary_value": "0.296",
+            "secondary_label": "dropbacks",
+            "secondary_value": "570"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "Jahmyr Gibbs",
         "carries_per_game": 14.7,
         "carry_share": 0.523,
-        "carries": 250
+        "carries": 250,
+        "incumbents": [
+          {
+            "name": "Jahmyr Gibbs",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "14.7",
+            "secondary_label": "share",
+            "secondary_value": "52%"
+          },
+          {
+            "name": "David Montgomery",
+            "games": 14,
+            "primary_label": "car/g",
+            "primary_value": "13.2",
+            "secondary_label": "share",
+            "secondary_value": "39%"
+          },
+          {
+            "name": "Craig Reynolds",
+            "games": 8,
+            "primary_label": "car/g",
+            "primary_value": "3.9",
+            "secondary_label": "share",
+            "secondary_value": "6%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Amon-Ra St. Brown",
         "target_share": 0.27,
-        "targets": 141
+        "targets": 141,
+        "incumbents": [
+          {
+            "name": "Amon-Ra St. Brown",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "27%",
+            "secondary_label": "targets",
+            "secondary_value": "141"
+          },
+          {
+            "name": "Jameson Williams",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "17%",
+            "secondary_label": "targets",
+            "secondary_value": "91"
+          },
+          {
+            "name": "Tim Patrick",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "8%",
+            "secondary_label": "targets",
+            "secondary_value": "44"
+          }
+        ]
       },
       "TE": {
         "status": "locked",
         "starter": "Sam LaPorta",
         "target_share": 0.159,
-        "targets": 83
+        "targets": 83,
+        "incumbents": [
+          {
+            "name": "Sam LaPorta",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "16%",
+            "secondary_label": "targets",
+            "secondary_value": "83"
+          }
+        ]
       }
     },
     "GB": {
@@ -320,26 +1135,106 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Jordan Love",
         "epa_per_dropback": 0.142,
-        "dropbacks": 439
+        "dropbacks": 439,
+        "incumbents": [
+          {
+            "name": "Jordan Love",
+            "games": 15,
+            "primary_label": "EPA/db",
+            "primary_value": "0.142",
+            "secondary_label": "dropbacks",
+            "secondary_value": "439"
+          },
+          {
+            "name": "Malik Willis",
+            "games": 6,
+            "primary_label": "EPA/db",
+            "primary_value": "0.247",
+            "secondary_label": "dropbacks",
+            "secondary_value": "62"
+          }
+        ]
       },
       "RB": {
         "status": "locked",
         "starter": "Josh Jacobs",
         "carries_per_game": 17.7,
         "carry_share": 0.675,
-        "carries": 301
+        "carries": 301,
+        "incumbents": [
+          {
+            "name": "Josh Jacobs",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "17.7",
+            "secondary_label": "share",
+            "secondary_value": "67%"
+          },
+          {
+            "name": "Emanuel Wilson",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "6.1",
+            "secondary_label": "share",
+            "secondary_value": "23%"
+          },
+          {
+            "name": "Christopher Brooks",
+            "games": 11,
+            "primary_label": "car/g",
+            "primary_value": "3.3",
+            "secondary_label": "share",
+            "secondary_value": "8%"
+          }
+        ]
       },
       "WR": {
         "status": "contested",
         "starter": "Dontayvion Wicks",
         "target_share": 0.164,
-        "targets": 76
+        "targets": 76,
+        "incumbents": [
+          {
+            "name": "Dontayvion Wicks",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "16%",
+            "secondary_label": "targets",
+            "secondary_value": "76"
+          },
+          {
+            "name": "Jayden Reed",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "16%",
+            "secondary_label": "targets",
+            "secondary_value": "75"
+          },
+          {
+            "name": "Romeo Doubs",
+            "games": 13,
+            "primary_label": "tgt%",
+            "primary_value": "16%",
+            "secondary_label": "targets",
+            "secondary_value": "72"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Tucker Kraft",
         "target_share": 0.151,
-        "targets": 70
+        "targets": 70,
+        "incumbents": [
+          {
+            "name": "Tucker Kraft",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "15%",
+            "secondary_label": "targets",
+            "secondary_value": "70"
+          }
+        ]
       }
     },
     "HOU": {
@@ -347,26 +1242,98 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "C.J. Stroud",
         "epa_per_dropback": -0.022,
-        "dropbacks": 584
+        "dropbacks": 584,
+        "incumbents": [
+          {
+            "name": "C.J. Stroud",
+            "games": 17,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.022",
+            "secondary_label": "dropbacks",
+            "secondary_value": "584"
+          }
+        ]
       },
       "RB": {
         "status": "locked",
         "starter": "Joe Mixon",
         "carries_per_game": 17.5,
         "carry_share": 0.752,
-        "carries": 245
+        "carries": 245,
+        "incumbents": [
+          {
+            "name": "Joe Mixon",
+            "games": 14,
+            "primary_label": "car/g",
+            "primary_value": "17.5",
+            "secondary_label": "share",
+            "secondary_value": "75%"
+          },
+          {
+            "name": "Dameon Pierce",
+            "games": 10,
+            "primary_label": "car/g",
+            "primary_value": "4",
+            "secondary_label": "share",
+            "secondary_value": "12%"
+          },
+          {
+            "name": "Dare Ogunbowale",
+            "games": 16,
+            "primary_label": "car/g",
+            "primary_value": "1.9",
+            "secondary_label": "share",
+            "secondary_value": "9%"
+          }
+        ]
       },
       "WR": {
         "status": "contested",
         "starter": "Nico Collins",
         "target_share": 0.181,
-        "targets": 99
+        "targets": 99,
+        "incumbents": [
+          {
+            "name": "Nico Collins",
+            "games": 12,
+            "primary_label": "tgt%",
+            "primary_value": "18%",
+            "secondary_label": "targets",
+            "secondary_value": "99"
+          },
+          {
+            "name": "Tank Dell",
+            "games": 14,
+            "primary_label": "tgt%",
+            "primary_value": "15%",
+            "secondary_label": "targets",
+            "secondary_value": "81"
+          },
+          {
+            "name": "Diontae Johnson",
+            "games": 11,
+            "primary_label": "tgt%",
+            "primary_value": "13%",
+            "secondary_label": "targets",
+            "secondary_value": "67"
+          }
+        ]
       },
       "TE": {
         "status": "locked",
         "starter": "Dalton Schultz",
         "target_share": 0.155,
-        "targets": 85
+        "targets": 85,
+        "incumbents": [
+          {
+            "name": "Dalton Schultz",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "16%",
+            "secondary_label": "targets",
+            "secondary_value": "85"
+          }
+        ]
       }
     },
     "IND": {
@@ -374,26 +1341,106 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Anthony Richardson",
         "epa_per_dropback": -0.141,
-        "dropbacks": 278
+        "dropbacks": 278,
+        "incumbents": [
+          {
+            "name": "Anthony Richardson",
+            "games": 11,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.141",
+            "secondary_label": "dropbacks",
+            "secondary_value": "278"
+          },
+          {
+            "name": "Joe Flacco",
+            "games": 7,
+            "primary_label": "EPA/db",
+            "primary_value": "0.008",
+            "secondary_label": "dropbacks",
+            "secondary_value": "266"
+          }
+        ]
       },
       "RB": {
         "status": "locked",
         "starter": "Jonathan Taylor",
         "carries_per_game": 21.6,
         "carry_share": 0.775,
-        "carries": 303
+        "carries": 303,
+        "incumbents": [
+          {
+            "name": "Jonathan Taylor",
+            "games": 14,
+            "primary_label": "car/g",
+            "primary_value": "21.6",
+            "secondary_label": "share",
+            "secondary_value": "77%"
+          },
+          {
+            "name": "Trey Sermon",
+            "games": 15,
+            "primary_label": "car/g",
+            "primary_value": "3.7",
+            "secondary_label": "share",
+            "secondary_value": "14%"
+          },
+          {
+            "name": "Tyler Goodson",
+            "games": 14,
+            "primary_label": "car/g",
+            "primary_value": "2.3",
+            "secondary_label": "share",
+            "secondary_value": "8%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Michael Pittman",
         "target_share": 0.226,
-        "targets": 111
+        "targets": 111,
+        "incumbents": [
+          {
+            "name": "Michael Pittman",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "23%",
+            "secondary_label": "targets",
+            "secondary_value": "111"
+          },
+          {
+            "name": "Josh Downs",
+            "games": 14,
+            "primary_label": "tgt%",
+            "primary_value": "22%",
+            "secondary_label": "targets",
+            "secondary_value": "107"
+          },
+          {
+            "name": "Alec Pierce",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "14%",
+            "secondary_label": "targets",
+            "secondary_value": "69"
+          }
+        ]
       },
       "TE": {
         "status": "open",
         "starter": "Kylen Granson",
         "target_share": 0.063,
-        "targets": 31
+        "targets": 31,
+        "incumbents": [
+          {
+            "name": "Kylen Granson",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "6%",
+            "secondary_label": "targets",
+            "secondary_value": "31"
+          }
+        ]
       }
     },
     "JAX": {
@@ -401,26 +1448,114 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Trevor Lawrence",
         "epa_per_dropback": 0.02,
-        "dropbacks": 302
+        "dropbacks": 302,
+        "incumbents": [
+          {
+            "name": "Trevor Lawrence",
+            "games": 10,
+            "primary_label": "EPA/db",
+            "primary_value": "0.02",
+            "secondary_label": "dropbacks",
+            "secondary_value": "302"
+          },
+          {
+            "name": "Mac Jones",
+            "games": 10,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.012",
+            "secondary_label": "dropbacks",
+            "secondary_value": "276"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "Tank Bigsby",
         "carries_per_game": 10.5,
         "carry_share": 0.48,
-        "carries": 168
+        "carries": 168,
+        "incumbents": [
+          {
+            "name": "Tank Bigsby",
+            "games": 16,
+            "primary_label": "car/g",
+            "primary_value": "10.5",
+            "secondary_label": "share",
+            "secondary_value": "48%"
+          },
+          {
+            "name": "Travis Etienne",
+            "games": 15,
+            "primary_label": "car/g",
+            "primary_value": "10",
+            "secondary_label": "share",
+            "secondary_value": "43%"
+          },
+          {
+            "name": "D'Ernest Johnson",
+            "games": 12,
+            "primary_label": "car/g",
+            "primary_value": "2.7",
+            "secondary_label": "share",
+            "secondary_value": "9%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Brian Thomas",
         "target_share": 0.255,
-        "targets": 133
+        "targets": 133,
+        "incumbents": [
+          {
+            "name": "Brian Thomas",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "25%",
+            "secondary_label": "targets",
+            "secondary_value": "133"
+          },
+          {
+            "name": "Parker Washington",
+            "games": 14,
+            "primary_label": "tgt%",
+            "primary_value": "10%",
+            "secondary_label": "targets",
+            "secondary_value": "51"
+          },
+          {
+            "name": "Christian Kirk",
+            "games": 8,
+            "primary_label": "tgt%",
+            "primary_value": "9%",
+            "secondary_label": "targets",
+            "secondary_value": "47"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Evan Engram",
         "target_share": 0.123,
-        "targets": 64
+        "targets": 64,
+        "incumbents": [
+          {
+            "name": "Evan Engram",
+            "games": 9,
+            "primary_label": "tgt%",
+            "primary_value": "12%",
+            "secondary_label": "targets",
+            "secondary_value": "64"
+          },
+          {
+            "name": "Brenton Strange",
+            "games": 14,
+            "primary_label": "tgt%",
+            "primary_value": "10%",
+            "secondary_label": "targets",
+            "secondary_value": "53"
+          }
+        ]
       }
     },
     "KC": {
@@ -428,26 +1563,98 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Patrick Mahomes",
         "epa_per_dropback": 0.115,
-        "dropbacks": 617
+        "dropbacks": 617,
+        "incumbents": [
+          {
+            "name": "Patrick Mahomes",
+            "games": 16,
+            "primary_label": "EPA/db",
+            "primary_value": "0.115",
+            "secondary_label": "dropbacks",
+            "secondary_value": "617"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "Kareem Hunt",
         "carries_per_game": 15.4,
         "carry_share": 0.557,
-        "carries": 200
+        "carries": 200,
+        "incumbents": [
+          {
+            "name": "Kareem Hunt",
+            "games": 13,
+            "primary_label": "car/g",
+            "primary_value": "15.4",
+            "secondary_label": "share",
+            "secondary_value": "56%"
+          },
+          {
+            "name": "Isiah Pacheco",
+            "games": 7,
+            "primary_label": "car/g",
+            "primary_value": "11.9",
+            "secondary_label": "share",
+            "secondary_value": "23%"
+          },
+          {
+            "name": "Carson Steele",
+            "games": 13,
+            "primary_label": "car/g",
+            "primary_value": "4.3",
+            "secondary_label": "share",
+            "secondary_value": "16%"
+          }
+        ]
       },
       "WR": {
         "status": "contested",
         "starter": "Xavier Worthy",
         "target_share": 0.171,
-        "targets": 98
+        "targets": 98,
+        "incumbents": [
+          {
+            "name": "Xavier Worthy",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "17%",
+            "secondary_label": "targets",
+            "secondary_value": "98"
+          },
+          {
+            "name": "DeAndre Hopkins",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "16%",
+            "secondary_label": "targets",
+            "secondary_value": "80"
+          }
+        ]
       },
       "TE": {
         "status": "locked",
         "starter": "Travis Kelce",
         "target_share": 0.233,
-        "targets": 133
+        "targets": 133,
+        "incumbents": [
+          {
+            "name": "Travis Kelce",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "23%",
+            "secondary_label": "targets",
+            "secondary_value": "133"
+          },
+          {
+            "name": "Noah Gray",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "9%",
+            "secondary_label": "targets",
+            "secondary_value": "49"
+          }
+        ]
       }
     },
     "LAC": {
@@ -455,26 +1662,98 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Justin Herbert",
         "epa_per_dropback": 0.132,
-        "dropbacks": 545
+        "dropbacks": 545,
+        "incumbents": [
+          {
+            "name": "Justin Herbert",
+            "games": 17,
+            "primary_label": "EPA/db",
+            "primary_value": "0.132",
+            "secondary_label": "dropbacks",
+            "secondary_value": "545"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "J.K. Dobbins",
         "carries_per_game": 15,
         "carry_share": 0.523,
-        "carries": 195
+        "carries": 195,
+        "incumbents": [
+          {
+            "name": "J.K. Dobbins",
+            "games": 13,
+            "primary_label": "car/g",
+            "primary_value": "15",
+            "secondary_label": "share",
+            "secondary_value": "52%"
+          },
+          {
+            "name": "Gus Edwards",
+            "games": 11,
+            "primary_label": "car/g",
+            "primary_value": "9.2",
+            "secondary_label": "share",
+            "secondary_value": "27%"
+          },
+          {
+            "name": "Kimani Vidal",
+            "games": 9,
+            "primary_label": "car/g",
+            "primary_value": "4.8",
+            "secondary_label": "share",
+            "secondary_value": "12%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Ladd McConkey",
         "target_share": 0.228,
-        "targets": 112
+        "targets": 112,
+        "incumbents": [
+          {
+            "name": "Ladd McConkey",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "23%",
+            "secondary_label": "targets",
+            "secondary_value": "112"
+          },
+          {
+            "name": "Quentin Johnston",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "19%",
+            "secondary_label": "targets",
+            "secondary_value": "91"
+          },
+          {
+            "name": "Josh Palmer",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "13%",
+            "secondary_label": "targets",
+            "secondary_value": "65"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Will Dissly",
         "target_share": 0.13,
-        "targets": 64
+        "targets": 64,
+        "incumbents": [
+          {
+            "name": "Will Dissly",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "13%",
+            "secondary_label": "targets",
+            "secondary_value": "64"
+          }
+        ]
       }
     },
     "LAR": {
@@ -482,26 +1761,90 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Matthew Stafford",
         "epa_per_dropback": 0.06,
-        "dropbacks": 545
+        "dropbacks": 545,
+        "incumbents": [
+          {
+            "name": "Matthew Stafford",
+            "games": 16,
+            "primary_label": "EPA/db",
+            "primary_value": "0.06",
+            "secondary_label": "dropbacks",
+            "secondary_value": "545"
+          }
+        ]
       },
       "RB": {
         "status": "locked",
         "starter": "Kyren Williams",
         "carries_per_game": 19.8,
         "carry_share": 0.796,
-        "carries": 316
+        "carries": 316,
+        "incumbents": [
+          {
+            "name": "Kyren Williams",
+            "games": 16,
+            "primary_label": "car/g",
+            "primary_value": "19.8",
+            "secondary_label": "share",
+            "secondary_value": "80%"
+          },
+          {
+            "name": "Blake Corum",
+            "games": 15,
+            "primary_label": "car/g",
+            "primary_value": "3.9",
+            "secondary_label": "share",
+            "secondary_value": "15%"
+          }
+        ]
       },
       "WR": {
         "status": "contested",
         "starter": "Puka Nacua",
         "target_share": 0.196,
-        "targets": 106
+        "targets": 106,
+        "incumbents": [
+          {
+            "name": "Puka Nacua",
+            "games": 11,
+            "primary_label": "tgt%",
+            "primary_value": "20%",
+            "secondary_label": "targets",
+            "secondary_value": "106"
+          },
+          {
+            "name": "Cooper Kupp",
+            "games": 12,
+            "primary_label": "tgt%",
+            "primary_value": "18%",
+            "secondary_label": "targets",
+            "secondary_value": "100"
+          },
+          {
+            "name": "Demarcus Robinson",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "12%",
+            "secondary_label": "targets",
+            "secondary_value": "64"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Colby Parkinson",
         "target_share": 0.091,
-        "targets": 49
+        "targets": 49,
+        "incumbents": [
+          {
+            "name": "Colby Parkinson",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "9%",
+            "secondary_label": "targets",
+            "secondary_value": "49"
+          }
+        ]
       }
     },
     "LVR": {
@@ -509,26 +1852,114 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Gardner Minshew",
         "epa_per_dropback": -0.137,
-        "dropbacks": 335
+        "dropbacks": 335,
+        "incumbents": [
+          {
+            "name": "Gardner Minshew",
+            "games": 10,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.137",
+            "secondary_label": "dropbacks",
+            "secondary_value": "335"
+          },
+          {
+            "name": "Aidan O'Connell",
+            "games": 9,
+            "primary_label": "EPA/db",
+            "primary_value": "0.01",
+            "secondary_label": "dropbacks",
+            "secondary_value": "253"
+          },
+          {
+            "name": "Desmond Ridder",
+            "games": 5,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.232",
+            "secondary_label": "dropbacks",
+            "secondary_value": "95"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "Alexander Mattison",
         "carries_per_game": 9.4,
         "carry_share": 0.426,
-        "carries": 132
+        "carries": 132,
+        "incumbents": [
+          {
+            "name": "Alexander Mattison",
+            "games": 14,
+            "primary_label": "car/g",
+            "primary_value": "9.4",
+            "secondary_label": "share",
+            "secondary_value": "43%"
+          },
+          {
+            "name": "Ameer Abdullah",
+            "games": 15,
+            "primary_label": "car/g",
+            "primary_value": "4.4",
+            "secondary_label": "share",
+            "secondary_value": "21%"
+          },
+          {
+            "name": "Zamir White",
+            "games": 8,
+            "primary_label": "car/g",
+            "primary_value": "8.1",
+            "secondary_label": "share",
+            "secondary_value": "21%"
+          }
+        ]
       },
       "WR": {
         "status": "contested",
         "starter": "Jakobi Meyers",
         "target_share": 0.218,
-        "targets": 129
+        "targets": 129,
+        "incumbents": [
+          {
+            "name": "Jakobi Meyers",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "22%",
+            "secondary_label": "targets",
+            "secondary_value": "129"
+          },
+          {
+            "name": "Tre Tucker",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "14%",
+            "secondary_label": "targets",
+            "secondary_value": "81"
+          }
+        ]
       },
       "TE": {
         "status": "locked",
         "starter": "Brock Bowers",
         "target_share": 0.258,
-        "targets": 153
+        "targets": 153,
+        "incumbents": [
+          {
+            "name": "Brock Bowers",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "26%",
+            "secondary_label": "targets",
+            "secondary_value": "153"
+          },
+          {
+            "name": "Michael Mayer",
+            "games": 11,
+            "primary_label": "tgt%",
+            "primary_value": "5%",
+            "secondary_label": "targets",
+            "secondary_value": "32"
+          }
+        ]
       }
     },
     "MIA": {
@@ -536,26 +1967,98 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Tua Tagovailoa",
         "epa_per_dropback": 0.204,
-        "dropbacks": 420
+        "dropbacks": 420,
+        "incumbents": [
+          {
+            "name": "Tua Tagovailoa",
+            "games": 11,
+            "primary_label": "EPA/db",
+            "primary_value": "0.204",
+            "secondary_label": "dropbacks",
+            "secondary_value": "420"
+          },
+          {
+            "name": "Tyler Huntley",
+            "games": 5,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.133",
+            "secondary_label": "dropbacks",
+            "secondary_value": "148"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "Devon Achane",
         "carries_per_game": 11.9,
         "carry_share": 0.531,
-        "carries": 203
+        "carries": 203,
+        "incumbents": [
+          {
+            "name": "Devon Achane",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "11.9",
+            "secondary_label": "share",
+            "secondary_value": "53%"
+          },
+          {
+            "name": "Raheem Mostert",
+            "games": 13,
+            "primary_label": "car/g",
+            "primary_value": "6.5",
+            "secondary_label": "share",
+            "secondary_value": "22%"
+          },
+          {
+            "name": "Jaylen Wright",
+            "games": 13,
+            "primary_label": "car/g",
+            "primary_value": "5.2",
+            "secondary_label": "share",
+            "secondary_value": "18%"
+          }
+        ]
       },
       "WR": {
         "status": "contested",
         "starter": "Tyreek Hill",
         "target_share": 0.215,
-        "targets": 122
+        "targets": 122,
+        "incumbents": [
+          {
+            "name": "Tyreek Hill",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "21%",
+            "secondary_label": "targets",
+            "secondary_value": "122"
+          },
+          {
+            "name": "Jaylen Waddle",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "15%",
+            "secondary_label": "targets",
+            "secondary_value": "83"
+          }
+        ]
       },
       "TE": {
         "status": "locked",
         "starter": "Jonnu Smith",
         "target_share": 0.195,
-        "targets": 111
+        "targets": 111,
+        "incumbents": [
+          {
+            "name": "Jonnu Smith",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "20%",
+            "secondary_label": "targets",
+            "secondary_value": "111"
+          }
+        ]
       }
     },
     "MIN": {
@@ -563,26 +2066,106 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Sam Darnold",
         "epa_per_dropback": 0.084,
-        "dropbacks": 593
+        "dropbacks": 593,
+        "incumbents": [
+          {
+            "name": "Sam Darnold",
+            "games": 17,
+            "primary_label": "EPA/db",
+            "primary_value": "0.084",
+            "secondary_label": "dropbacks",
+            "secondary_value": "593"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "Aaron Jones",
         "carries_per_game": 15,
         "carry_share": 0.607,
-        "carries": 255
+        "carries": 255,
+        "incumbents": [
+          {
+            "name": "Aaron Jones",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "15",
+            "secondary_label": "share",
+            "secondary_value": "61%"
+          },
+          {
+            "name": "Cam Akers",
+            "games": 16,
+            "primary_label": "car/g",
+            "primary_value": "6.5",
+            "secondary_label": "share",
+            "secondary_value": "25%"
+          },
+          {
+            "name": "Ty Chandler",
+            "games": 14,
+            "primary_label": "car/g",
+            "primary_value": "4",
+            "secondary_label": "share",
+            "secondary_value": "13%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Justin Jefferson",
         "target_share": 0.298,
-        "targets": 154
+        "targets": 154,
+        "incumbents": [
+          {
+            "name": "Justin Jefferson",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "30%",
+            "secondary_label": "targets",
+            "secondary_value": "154"
+          },
+          {
+            "name": "Jordan Addison",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "19%",
+            "secondary_label": "targets",
+            "secondary_value": "99"
+          },
+          {
+            "name": "Jalen Nailor",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "8%",
+            "secondary_label": "targets",
+            "secondary_value": "42"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "T.J. Hockenson",
         "target_share": 0.12,
-        "targets": 62
+        "targets": 62,
+        "incumbents": [
+          {
+            "name": "T.J. Hockenson",
+            "games": 10,
+            "primary_label": "tgt%",
+            "primary_value": "12%",
+            "secondary_label": "targets",
+            "secondary_value": "62"
+          },
+          {
+            "name": "Josh Oliver",
+            "games": 12,
+            "primary_label": "tgt%",
+            "primary_value": "5%",
+            "secondary_label": "targets",
+            "secondary_value": "28"
+          }
+        ]
       }
     },
     "NE": {
@@ -590,26 +2173,98 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Drake Maye",
         "epa_per_dropback": -0.071,
-        "dropbacks": 372
+        "dropbacks": 372,
+        "incumbents": [
+          {
+            "name": "Drake Maye",
+            "games": 13,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.071",
+            "secondary_label": "dropbacks",
+            "secondary_value": "372"
+          },
+          {
+            "name": "Jacoby Brissett",
+            "games": 7,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.207",
+            "secondary_label": "dropbacks",
+            "secondary_value": "179"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "Rhamondre Stevenson",
         "carries_per_game": 13.8,
         "carry_share": 0.575,
-        "carries": 207
+        "carries": 207,
+        "incumbents": [
+          {
+            "name": "Rhamondre Stevenson",
+            "games": 15,
+            "primary_label": "car/g",
+            "primary_value": "13.8",
+            "secondary_label": "share",
+            "secondary_value": "57%"
+          },
+          {
+            "name": "Antonio Gibson",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "7.1",
+            "secondary_label": "share",
+            "secondary_value": "33%"
+          }
+        ]
       },
       "WR": {
         "status": "contested",
         "starter": "Demario Douglas",
         "target_share": 0.174,
-        "targets": 87
+        "targets": 87,
+        "incumbents": [
+          {
+            "name": "Demario Douglas",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "17%",
+            "secondary_label": "targets",
+            "secondary_value": "87"
+          },
+          {
+            "name": "Kayshon Boutte",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "14%",
+            "secondary_label": "targets",
+            "secondary_value": "68"
+          }
+        ]
       },
       "TE": {
         "status": "locked",
         "starter": "Hunter Henry",
         "target_share": 0.194,
-        "targets": 97
+        "targets": 97,
+        "incumbents": [
+          {
+            "name": "Hunter Henry",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "19%",
+            "secondary_label": "targets",
+            "secondary_value": "97"
+          },
+          {
+            "name": "Austin Hooper",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "12%",
+            "secondary_label": "targets",
+            "secondary_value": "59"
+          }
+        ]
       }
     },
     "NOR": {
@@ -617,26 +2272,114 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Derek Carr",
         "epa_per_dropback": 0.166,
-        "dropbacks": 287
+        "dropbacks": 287,
+        "incumbents": [
+          {
+            "name": "Derek Carr",
+            "games": 10,
+            "primary_label": "EPA/db",
+            "primary_value": "0.166",
+            "secondary_label": "dropbacks",
+            "secondary_value": "287"
+          },
+          {
+            "name": "Spencer Rattler",
+            "games": 7,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.303",
+            "secondary_label": "dropbacks",
+            "secondary_value": "250"
+          }
+        ]
       },
       "RB": {
         "status": "locked",
         "starter": "Alvin Kamara",
         "carries_per_game": 16.3,
         "carry_share": 0.655,
-        "carries": 228
+        "carries": 228,
+        "incumbents": [
+          {
+            "name": "Alvin Kamara",
+            "games": 14,
+            "primary_label": "car/g",
+            "primary_value": "16.3",
+            "secondary_label": "share",
+            "secondary_value": "66%"
+          },
+          {
+            "name": "Jamaal Williams",
+            "games": 14,
+            "primary_label": "car/g",
+            "primary_value": "3.4",
+            "secondary_label": "share",
+            "secondary_value": "14%"
+          },
+          {
+            "name": "Kendre Miller",
+            "games": 6,
+            "primary_label": "car/g",
+            "primary_value": "6.5",
+            "secondary_label": "share",
+            "secondary_value": "11%"
+          }
+        ]
       },
       "WR": {
         "status": "open",
         "starter": "Marquez Valdes-Scantling",
         "target_share": 0.089,
-        "targets": 44
+        "targets": 44,
+        "incumbents": [
+          {
+            "name": "Marquez Valdes-Scantling",
+            "games": 13,
+            "primary_label": "tgt%",
+            "primary_value": "9%",
+            "secondary_label": "targets",
+            "secondary_value": "44"
+          },
+          {
+            "name": "Chris Olave",
+            "games": 8,
+            "primary_label": "tgt%",
+            "primary_value": "9%",
+            "secondary_label": "targets",
+            "secondary_value": "44"
+          },
+          {
+            "name": "Rashid Shaheed",
+            "games": 6,
+            "primary_label": "tgt%",
+            "primary_value": "8%",
+            "secondary_label": "targets",
+            "secondary_value": "41"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Juwan Johnson",
         "target_share": 0.128,
-        "targets": 66
+        "targets": 66,
+        "incumbents": [
+          {
+            "name": "Juwan Johnson",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "13%",
+            "secondary_label": "targets",
+            "secondary_value": "66"
+          },
+          {
+            "name": "Foster Moreau",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "8%",
+            "secondary_label": "targets",
+            "secondary_value": "43"
+          }
+        ]
       }
     },
     "NYG": {
@@ -644,26 +2387,106 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Daniel Jones",
         "epa_per_dropback": -0.103,
-        "dropbacks": 370
+        "dropbacks": 370,
+        "incumbents": [
+          {
+            "name": "Daniel Jones",
+            "games": 10,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.103",
+            "secondary_label": "dropbacks",
+            "secondary_value": "370"
+          },
+          {
+            "name": "Drew Lock",
+            "games": 7,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.216",
+            "secondary_label": "dropbacks",
+            "secondary_value": "193"
+          },
+          {
+            "name": "Tim Boyle",
+            "games": 3,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.279",
+            "secondary_label": "dropbacks",
+            "secondary_value": "52"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "Tyrone Tracy",
         "carries_per_game": 11.3,
         "carry_share": 0.602,
-        "carries": 192
+        "carries": 192,
+        "incumbents": [
+          {
+            "name": "Tyrone Tracy",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "11.3",
+            "secondary_label": "share",
+            "secondary_value": "60%"
+          },
+          {
+            "name": "Devin Singletary",
+            "games": 15,
+            "primary_label": "car/g",
+            "primary_value": "7.5",
+            "secondary_label": "share",
+            "secondary_value": "35%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Malik Nabers",
         "target_share": 0.307,
-        "targets": 170
+        "targets": 170,
+        "incumbents": [
+          {
+            "name": "Malik Nabers",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "31%",
+            "secondary_label": "targets",
+            "secondary_value": "170"
+          },
+          {
+            "name": "Wan'Dale Robinson",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "25%",
+            "secondary_label": "targets",
+            "secondary_value": "140"
+          },
+          {
+            "name": "Darius Slayton",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "13%",
+            "secondary_label": "targets",
+            "secondary_value": "71"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Theo Johnson",
         "target_share": 0.078,
-        "targets": 43
+        "targets": 43,
+        "incumbents": [
+          {
+            "name": "Theo Johnson",
+            "games": 11,
+            "primary_label": "tgt%",
+            "primary_value": "8%",
+            "secondary_label": "targets",
+            "secondary_value": "43"
+          }
+        ]
       }
     },
     "NYJ": {
@@ -671,26 +2494,106 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Aaron Rodgers",
         "epa_per_dropback": 0.018,
-        "dropbacks": 624
+        "dropbacks": 624,
+        "incumbents": [
+          {
+            "name": "Aaron Rodgers",
+            "games": 17,
+            "primary_label": "EPA/db",
+            "primary_value": "0.018",
+            "secondary_label": "dropbacks",
+            "secondary_value": "624"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "Breece Hall",
         "carries_per_game": 13.1,
         "carry_share": 0.631,
-        "carries": 209
+        "carries": 209,
+        "incumbents": [
+          {
+            "name": "Breece Hall",
+            "games": 16,
+            "primary_label": "car/g",
+            "primary_value": "13.1",
+            "secondary_label": "share",
+            "secondary_value": "63%"
+          },
+          {
+            "name": "Braelon Allen",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "5.4",
+            "secondary_label": "share",
+            "secondary_value": "28%"
+          },
+          {
+            "name": "Isaiah Davis",
+            "games": 13,
+            "primary_label": "car/g",
+            "primary_value": "2.3",
+            "secondary_label": "share",
+            "secondary_value": "9%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Garrett Wilson",
         "target_share": 0.26,
-        "targets": 153
+        "targets": 153,
+        "incumbents": [
+          {
+            "name": "Garrett Wilson",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "26%",
+            "secondary_label": "targets",
+            "secondary_value": "153"
+          },
+          {
+            "name": "Davante Adams",
+            "games": 14,
+            "primary_label": "tgt%",
+            "primary_value": "24%",
+            "secondary_label": "targets",
+            "secondary_value": "141"
+          },
+          {
+            "name": "Allen Lazard",
+            "games": 12,
+            "primary_label": "tgt%",
+            "primary_value": "10%",
+            "secondary_label": "targets",
+            "secondary_value": "61"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Tyler Conklin",
         "target_share": 0.122,
-        "targets": 72
+        "targets": 72,
+        "incumbents": [
+          {
+            "name": "Tyler Conklin",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "12%",
+            "secondary_label": "targets",
+            "secondary_value": "72"
+          },
+          {
+            "name": "Jeremy Ruckert",
+            "games": 14,
+            "primary_label": "tgt%",
+            "primary_value": "5%",
+            "secondary_label": "targets",
+            "secondary_value": "28"
+          }
+        ]
       }
     },
     "PHI": {
@@ -698,26 +2601,98 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Jalen Hurts",
         "epa_per_dropback": 0.101,
-        "dropbacks": 399
+        "dropbacks": 399,
+        "incumbents": [
+          {
+            "name": "Jalen Hurts",
+            "games": 15,
+            "primary_label": "EPA/db",
+            "primary_value": "0.101",
+            "secondary_label": "dropbacks",
+            "secondary_value": "399"
+          }
+        ]
       },
       "RB": {
         "status": "locked",
         "starter": "Saquon Barkley",
         "carries_per_game": 21.6,
         "carry_share": 0.762,
-        "carries": 345
+        "carries": 345,
+        "incumbents": [
+          {
+            "name": "Saquon Barkley",
+            "games": 16,
+            "primary_label": "car/g",
+            "primary_value": "21.6",
+            "secondary_label": "share",
+            "secondary_value": "76%"
+          },
+          {
+            "name": "Kenneth Gainwell",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "4.4",
+            "secondary_label": "share",
+            "secondary_value": "17%"
+          },
+          {
+            "name": "Will Shipley",
+            "games": 13,
+            "primary_label": "car/g",
+            "primary_value": "2.3",
+            "secondary_label": "share",
+            "secondary_value": "7%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "A.J. Brown",
         "target_share": 0.232,
-        "targets": 97
+        "targets": 97,
+        "incumbents": [
+          {
+            "name": "A.J. Brown",
+            "games": 13,
+            "primary_label": "tgt%",
+            "primary_value": "23%",
+            "secondary_label": "targets",
+            "secondary_value": "97"
+          },
+          {
+            "name": "DeVonta Smith",
+            "games": 13,
+            "primary_label": "tgt%",
+            "primary_value": "21%",
+            "secondary_label": "targets",
+            "secondary_value": "89"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Dallas Goedert",
         "target_share": 0.124,
-        "targets": 52
+        "targets": 52,
+        "incumbents": [
+          {
+            "name": "Dallas Goedert",
+            "games": 10,
+            "primary_label": "tgt%",
+            "primary_value": "12%",
+            "secondary_label": "targets",
+            "secondary_value": "52"
+          },
+          {
+            "name": "Grant Calcaterra",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "7%",
+            "secondary_label": "targets",
+            "secondary_value": "30"
+          }
+        ]
       }
     },
     "PIT": {
@@ -725,26 +2700,114 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Russell Wilson",
         "epa_per_dropback": -0.005,
-        "dropbacks": 369
+        "dropbacks": 369,
+        "incumbents": [
+          {
+            "name": "Russell Wilson",
+            "games": 11,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.005",
+            "secondary_label": "dropbacks",
+            "secondary_value": "369"
+          },
+          {
+            "name": "Justin Fields",
+            "games": 10,
+            "primary_label": "EPA/db",
+            "primary_value": "0.043",
+            "secondary_label": "dropbacks",
+            "secondary_value": "177"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "Najee Harris",
         "carries_per_game": 15.5,
         "carry_share": 0.617,
-        "carries": 263
+        "carries": 263,
+        "incumbents": [
+          {
+            "name": "Najee Harris",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "15.5",
+            "secondary_label": "share",
+            "secondary_value": "62%"
+          },
+          {
+            "name": "Jaylen Warren",
+            "games": 15,
+            "primary_label": "car/g",
+            "primary_value": "8",
+            "secondary_label": "share",
+            "secondary_value": "28%"
+          },
+          {
+            "name": "Cordarrelle Patterson",
+            "games": 13,
+            "primary_label": "car/g",
+            "primary_value": "2.5",
+            "secondary_label": "share",
+            "secondary_value": "8%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "George Pickens",
         "target_share": 0.224,
-        "targets": 103
+        "targets": 103,
+        "incumbents": [
+          {
+            "name": "George Pickens",
+            "games": 14,
+            "primary_label": "tgt%",
+            "primary_value": "22%",
+            "secondary_label": "targets",
+            "secondary_value": "103"
+          },
+          {
+            "name": "Calvin Austin",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "13%",
+            "secondary_label": "targets",
+            "secondary_value": "58"
+          },
+          {
+            "name": "Van Jefferson",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "9%",
+            "secondary_label": "targets",
+            "secondary_value": "40"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Pat Freiermuth",
         "target_share": 0.17,
-        "targets": 78
+        "targets": 78,
+        "incumbents": [
+          {
+            "name": "Pat Freiermuth",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "17%",
+            "secondary_label": "targets",
+            "secondary_value": "78"
+          },
+          {
+            "name": "Darnell Washington",
+            "games": 13,
+            "primary_label": "tgt%",
+            "primary_value": "5%",
+            "secondary_label": "targets",
+            "secondary_value": "25"
+          }
+        ]
       }
     },
     "SEA": {
@@ -752,26 +2815,106 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Geno Smith",
         "epa_per_dropback": 0.035,
-        "dropbacks": 628
+        "dropbacks": 628,
+        "incumbents": [
+          {
+            "name": "Geno Smith",
+            "games": 17,
+            "primary_label": "EPA/db",
+            "primary_value": "0.035",
+            "secondary_label": "dropbacks",
+            "secondary_value": "628"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "Kenneth Walker",
         "carries_per_game": 13.9,
         "carry_share": 0.475,
-        "carries": 153
+        "carries": 153,
+        "incumbents": [
+          {
+            "name": "Kenneth Walker",
+            "games": 11,
+            "primary_label": "car/g",
+            "primary_value": "13.9",
+            "secondary_label": "share",
+            "secondary_value": "48%"
+          },
+          {
+            "name": "Zach Charbonnet",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "7.9",
+            "secondary_label": "share",
+            "secondary_value": "42%"
+          },
+          {
+            "name": "Kenny McIntosh",
+            "games": 11,
+            "primary_label": "car/g",
+            "primary_value": "2.8",
+            "secondary_label": "share",
+            "secondary_value": "10%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Jaxon Smith-Njigba",
         "target_share": 0.241,
-        "targets": 137
+        "targets": 137,
+        "incumbents": [
+          {
+            "name": "Jaxon Smith-Njigba",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "24%",
+            "secondary_label": "targets",
+            "secondary_value": "137"
+          },
+          {
+            "name": "DK Metcalf",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "19%",
+            "secondary_label": "targets",
+            "secondary_value": "108"
+          },
+          {
+            "name": "Tyler Lockett",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "13%",
+            "secondary_label": "targets",
+            "secondary_value": "74"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Noah Fant",
         "target_share": 0.112,
-        "targets": 64
+        "targets": 64,
+        "incumbents": [
+          {
+            "name": "Noah Fant",
+            "games": 14,
+            "primary_label": "tgt%",
+            "primary_value": "11%",
+            "secondary_label": "targets",
+            "secondary_value": "64"
+          },
+          {
+            "name": "A.J. Barner",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "7%",
+            "secondary_label": "targets",
+            "secondary_value": "38"
+          }
+        ]
       }
     },
     "SF": {
@@ -779,26 +2922,98 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Brock Purdy",
         "epa_per_dropback": 0.16,
-        "dropbacks": 486
+        "dropbacks": 486,
+        "incumbents": [
+          {
+            "name": "Brock Purdy",
+            "games": 15,
+            "primary_label": "EPA/db",
+            "primary_value": "0.16",
+            "secondary_label": "dropbacks",
+            "secondary_value": "486"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "Jordan Mason",
         "carries_per_game": 12.8,
         "carry_share": 0.459,
-        "carries": 153
+        "carries": 153,
+        "incumbents": [
+          {
+            "name": "Jordan Mason",
+            "games": 12,
+            "primary_label": "car/g",
+            "primary_value": "12.8",
+            "secondary_label": "share",
+            "secondary_value": "46%"
+          },
+          {
+            "name": "Isaac Guerendo",
+            "games": 16,
+            "primary_label": "car/g",
+            "primary_value": "5.3",
+            "secondary_label": "share",
+            "secondary_value": "25%"
+          },
+          {
+            "name": "Christian McCaffrey",
+            "games": 4,
+            "primary_label": "car/g",
+            "primary_value": "12.5",
+            "secondary_label": "share",
+            "secondary_value": "15%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Jauan Jennings",
         "target_share": 0.22,
-        "targets": 113
+        "targets": 113,
+        "incumbents": [
+          {
+            "name": "Jauan Jennings",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "22%",
+            "secondary_label": "targets",
+            "secondary_value": "113"
+          },
+          {
+            "name": "Deebo Samuel",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "16%",
+            "secondary_label": "targets",
+            "secondary_value": "81"
+          },
+          {
+            "name": "Brandon Aiyuk",
+            "games": 7,
+            "primary_label": "tgt%",
+            "primary_value": "9%",
+            "secondary_label": "targets",
+            "secondary_value": "47"
+          }
+        ]
       },
       "TE": {
         "status": "locked",
         "starter": "George Kittle",
         "target_share": 0.183,
-        "targets": 94
+        "targets": 94,
+        "incumbents": [
+          {
+            "name": "George Kittle",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "18%",
+            "secondary_label": "targets",
+            "secondary_value": "94"
+          }
+        ]
       }
     },
     "TB": {
@@ -806,26 +3021,98 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Baker Mayfield",
         "epa_per_dropback": 0.189,
-        "dropbacks": 610
+        "dropbacks": 610,
+        "incumbents": [
+          {
+            "name": "Baker Mayfield",
+            "games": 17,
+            "primary_label": "EPA/db",
+            "primary_value": "0.189",
+            "secondary_label": "dropbacks",
+            "secondary_value": "610"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "Bucky Irving",
         "carries_per_game": 12.2,
         "carry_share": 0.516,
-        "carries": 207
+        "carries": 207,
+        "incumbents": [
+          {
+            "name": "Bucky Irving",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "12.2",
+            "secondary_label": "share",
+            "secondary_value": "52%"
+          },
+          {
+            "name": "Rachaad White",
+            "games": 15,
+            "primary_label": "car/g",
+            "primary_value": "9.6",
+            "secondary_label": "share",
+            "secondary_value": "36%"
+          },
+          {
+            "name": "Sean Tucker",
+            "games": 17,
+            "primary_label": "car/g",
+            "primary_value": "2.9",
+            "secondary_label": "share",
+            "secondary_value": "12%"
+          }
+        ]
       },
       "WR": {
         "status": "contested",
         "starter": "Mike Evans",
         "target_share": 0.195,
-        "targets": 110
+        "targets": 110,
+        "incumbents": [
+          {
+            "name": "Mike Evans",
+            "games": 14,
+            "primary_label": "tgt%",
+            "primary_value": "20%",
+            "secondary_label": "targets",
+            "secondary_value": "110"
+          },
+          {
+            "name": "Chris Godwin",
+            "games": 7,
+            "primary_label": "tgt%",
+            "primary_value": "11%",
+            "secondary_label": "targets",
+            "secondary_value": "62"
+          },
+          {
+            "name": "Jalen McMillan",
+            "games": 13,
+            "primary_label": "tgt%",
+            "primary_value": "10%",
+            "secondary_label": "targets",
+            "secondary_value": "58"
+          }
+        ]
       },
       "TE": {
         "status": "locked",
         "starter": "Cade Otton",
         "target_share": 0.155,
-        "targets": 87
+        "targets": 87,
+        "incumbents": [
+          {
+            "name": "Cade Otton",
+            "games": 14,
+            "primary_label": "tgt%",
+            "primary_value": "15%",
+            "secondary_label": "targets",
+            "secondary_value": "87"
+          }
+        ]
       }
     },
     "TEN": {
@@ -833,26 +3120,106 @@ window.ANALYSIS_DATA = {
         "status": "contested",
         "starter": "Will Levis",
         "epa_per_dropback": -0.192,
-        "dropbacks": 342
+        "dropbacks": 342,
+        "incumbents": [
+          {
+            "name": "Will Levis",
+            "games": 12,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.192",
+            "secondary_label": "dropbacks",
+            "secondary_value": "342"
+          },
+          {
+            "name": "Mason Rudolph",
+            "games": 8,
+            "primary_label": "EPA/db",
+            "primary_value": "-0.004",
+            "secondary_label": "dropbacks",
+            "secondary_value": "239"
+          }
+        ]
       },
       "RB": {
         "status": "locked",
         "starter": "Tony Pollard",
         "carries_per_game": 16.3,
         "carry_share": 0.708,
-        "carries": 260
+        "carries": 260,
+        "incumbents": [
+          {
+            "name": "Tony Pollard",
+            "games": 16,
+            "primary_label": "car/g",
+            "primary_value": "16.3",
+            "secondary_label": "share",
+            "secondary_value": "71%"
+          },
+          {
+            "name": "Tyjae Spears",
+            "games": 12,
+            "primary_label": "car/g",
+            "primary_value": "7",
+            "secondary_label": "share",
+            "secondary_value": "23%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Calvin Ridley",
         "target_share": 0.237,
-        "targets": 120
+        "targets": 120,
+        "incumbents": [
+          {
+            "name": "Calvin Ridley",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "24%",
+            "secondary_label": "targets",
+            "secondary_value": "120"
+          },
+          {
+            "name": "Nick Westbrook-Ikhine",
+            "games": 14,
+            "primary_label": "tgt%",
+            "primary_value": "12%",
+            "secondary_label": "targets",
+            "secondary_value": "60"
+          },
+          {
+            "name": "Tyler Boyd",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "11%",
+            "secondary_label": "targets",
+            "secondary_value": "57"
+          }
+        ]
       },
       "TE": {
         "status": "contested",
         "starter": "Chigoziem Okonkwo",
         "target_share": 0.138,
-        "targets": 70
+        "targets": 70,
+        "incumbents": [
+          {
+            "name": "Chigoziem Okonkwo",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "14%",
+            "secondary_label": "targets",
+            "secondary_value": "70"
+          },
+          {
+            "name": "Josh Whyle",
+            "games": 15,
+            "primary_label": "tgt%",
+            "primary_value": "7%",
+            "secondary_label": "targets",
+            "secondary_value": "37"
+          }
+        ]
       }
     },
     "WAS": {
@@ -860,26 +3227,98 @@ window.ANALYSIS_DATA = {
         "status": "locked",
         "starter": "Jayden Daniels",
         "epa_per_dropback": 0.115,
-        "dropbacks": 527
+        "dropbacks": 527,
+        "incumbents": [
+          {
+            "name": "Jayden Daniels",
+            "games": 17,
+            "primary_label": "EPA/db",
+            "primary_value": "0.115",
+            "secondary_label": "dropbacks",
+            "secondary_value": "527"
+          }
+        ]
       },
       "RB": {
         "status": "contested",
         "starter": "Brian Robinson",
         "carries_per_game": 13.4,
         "carry_share": 0.528,
-        "carries": 187
+        "carries": 187,
+        "incumbents": [
+          {
+            "name": "Brian Robinson",
+            "games": 14,
+            "primary_label": "car/g",
+            "primary_value": "13.4",
+            "secondary_label": "share",
+            "secondary_value": "53%"
+          },
+          {
+            "name": "Austin Ekeler",
+            "games": 12,
+            "primary_label": "car/g",
+            "primary_value": "6.4",
+            "secondary_label": "share",
+            "secondary_value": "22%"
+          },
+          {
+            "name": "Jeremy McNichols",
+            "games": 15,
+            "primary_label": "car/g",
+            "primary_value": "3.7",
+            "secondary_label": "share",
+            "secondary_value": "16%"
+          }
+        ]
       },
       "WR": {
         "status": "locked",
         "starter": "Terry McLaurin",
         "target_share": 0.232,
-        "targets": 117
+        "targets": 117,
+        "incumbents": [
+          {
+            "name": "Terry McLaurin",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "23%",
+            "secondary_label": "targets",
+            "secondary_value": "117"
+          },
+          {
+            "name": "Olamide Zaccheaus",
+            "games": 16,
+            "primary_label": "tgt%",
+            "primary_value": "13%",
+            "secondary_label": "targets",
+            "secondary_value": "64"
+          },
+          {
+            "name": "Noah Brown",
+            "games": 11,
+            "primary_label": "tgt%",
+            "primary_value": "11%",
+            "secondary_label": "targets",
+            "secondary_value": "56"
+          }
+        ]
       },
       "TE": {
         "status": "locked",
         "starter": "Zach Ertz",
         "target_share": 0.181,
-        "targets": 91
+        "targets": 91,
+        "incumbents": [
+          {
+            "name": "Zach Ertz",
+            "games": 17,
+            "primary_label": "tgt%",
+            "primary_value": "18%",
+            "secondary_label": "targets",
+            "secondary_value": "91"
+          }
+        ]
       }
     }
   },

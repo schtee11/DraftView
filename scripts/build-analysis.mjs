@@ -95,9 +95,28 @@ function topByMetric(rows, metric) {
 }
 
 // ── Bucketing ───────────────────────────────────────────────────────────────
+// Each bucketer returns the room's status plus an `incumbents` array of the
+// top players at that position with their key stats. The starter field stays
+// for back-compat with the back-test.
+
+const fmt = (n, d = 3) => Number(n).toFixed(d).replace(/\.?0+$/, '');
+
 function bucketQB(qbs) {
-  const top = topByMetric(qbs, 'attempts');
-  if (!top) return { status: 'open', starter: null };
+  const sorted = [...qbs].sort((a, b) => num(b.attempts) - num(a.attempts));
+  const incumbents = sorted.filter(r => num(r.attempts) >= 50).slice(0, 3).map(r => {
+    const db = num(r.attempts) + num(r.sacks_suffered);
+    const epaDb = db ? num(r.passing_epa) / db : 0;
+    return {
+      name: r.player_display_name,
+      games: num(r.games),
+      primary_label: 'EPA/db',
+      primary_value: fmt(epaDb, 3),
+      secondary_label: 'dropbacks',
+      secondary_value: String(db),
+    };
+  });
+  const top = sorted[0];
+  if (!top) return { status: 'open', starter: null, incumbents: [] };
   const dropbacks = num(top.attempts) + num(top.sacks_suffered);
   const epaPerDb = dropbacks > 0 ? num(top.passing_epa) / dropbacks : 0;
   const status =
@@ -108,14 +127,29 @@ function bucketQB(qbs) {
     starter: top.player_display_name,
     epa_per_dropback: +epaPerDb.toFixed(3),
     dropbacks,
+    incumbents,
   };
 }
 
 function bucketRB(rbs) {
-  if (!rbs.length) return { status: 'open', starter: null };
-  const top = topByMetric(rbs, 'carries');
+  if (!rbs.length) return { status: 'open', starter: null, incumbents: [] };
   const teamCarries = rbs.reduce((s, r) => s + num(r.carries), 0);
-  if (!top || teamCarries === 0) return { status: 'open', starter: null };
+  const sorted = [...rbs].sort((a, b) => num(b.carries) - num(a.carries));
+  const incumbents = sorted.filter(r => num(r.carries) >= 30).slice(0, 3).map(r => {
+    const games = num(r.games) || 17;
+    const cpg = num(r.carries) / games;
+    const share = teamCarries ? num(r.carries) / teamCarries : 0;
+    return {
+      name: r.player_display_name,
+      games,
+      primary_label: 'car/g',
+      primary_value: fmt(cpg, 1),
+      secondary_label: 'share',
+      secondary_value: `${Math.round(share * 100)}%`,
+    };
+  });
+  const top = sorted[0];
+  if (!top || teamCarries === 0) return { status: 'open', starter: null, incumbents };
   const games = num(top.games) || 17;
   const cpg = num(top.carries) / games;
   const carryShare = num(top.carries) / teamCarries;
@@ -132,12 +166,22 @@ function bucketRB(rbs) {
     carries_per_game: +cpg.toFixed(1),
     carry_share: +carryShare.toFixed(3),
     carries: num(top.carries),
+    incumbents,
   };
 }
 
 function bucketWR(wrs) {
-  const top = topByMetric(wrs, 'target_share');
-  if (!top) return { status: 'open', starter: null };
+  const sorted = [...wrs].sort((a, b) => num(b.target_share) - num(a.target_share));
+  const incumbents = sorted.filter(r => num(r.targets) >= 40).slice(0, 3).map(r => ({
+    name: r.player_display_name,
+    games: num(r.games),
+    primary_label: 'tgt%',
+    primary_value: `${Math.round(num(r.target_share) * 100)}%`,
+    secondary_label: 'targets',
+    secondary_value: String(num(r.targets)),
+  }));
+  const top = sorted[0];
+  if (!top) return { status: 'open', starter: null, incumbents: [] };
   const ts = num(top.target_share);
   const status =
     ts >= THRESHOLDS.WR_LOCKED_TARGET_SHARE ? 'locked' :
@@ -147,12 +191,22 @@ function bucketWR(wrs) {
     starter: top.player_display_name,
     target_share: +ts.toFixed(3),
     targets: num(top.targets),
+    incumbents,
   };
 }
 
 function bucketTE(tes) {
-  const top = topByMetric(tes, 'targets');
-  if (!top) return { status: 'open', starter: null };
+  const sorted = [...tes].sort((a, b) => num(b.targets) - num(a.targets));
+  const incumbents = sorted.filter(r => num(r.targets) >= 25).slice(0, 2).map(r => ({
+    name: r.player_display_name,
+    games: num(r.games),
+    primary_label: 'tgt%',
+    primary_value: `${Math.round(num(r.target_share) * 100)}%`,
+    secondary_label: 'targets',
+    secondary_value: String(num(r.targets)),
+  }));
+  const top = sorted[0];
+  if (!top) return { status: 'open', starter: null, incumbents: [] };
   const ts = num(top.target_share);
   const t = num(top.targets);
   const status =
@@ -163,6 +217,7 @@ function bucketTE(tes) {
     starter: top.player_display_name,
     target_share: +ts.toFixed(3),
     targets: t,
+    incumbents,
   };
 }
 
