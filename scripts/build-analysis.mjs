@@ -53,47 +53,56 @@ async function pool(items, limit, fn) {
   return out;
 }
 
-// ESPN's stats response groups stats into categories. Flatten to a single
-// { name: numericValue } map so callers can pick fields by name.
-function flattenStats(json) {
+// ESPN's response shape:
+//   { categories: [
+//       { name: 'passing'|'rushing'|'receiving'|...,
+//         labels: ['GP','ATT','RTG',...],
+//         statistics: [
+//           { season: { year: 2024 }, stats: ['17','584','99.5',...] },
+//           { season: { year: 2025 }, stats: [...] }
+//         ]
+//       }
+//     ]
+//   }
+// Stats are POSITIONAL strings parallel to labels. Pick the season we want,
+// flatten to { 'category.LABEL': numericValue }, then extract by label.
+function flattenStats(json, season) {
   if (!json) return {};
-  // Two shapes seen in the wild:
-  //   { categories: [{ stats: [{ name, value, displayValue }] }] }
-  //   { splits: { categories: [...] } }
-  const cats =
-    json.categories ||
-    json?.splits?.categories ||
-    json?.statistics?.splits?.categories ||
-    [];
   const flat = {};
-  for (const c of cats) {
-    for (const s of (c.stats || [])) {
-      const v = s.value ?? Number(s.displayValue);
-      if (typeof v === 'number' && !Number.isNaN(v)) flat[s.name] = v;
-    }
+  for (const cat of (json.categories || [])) {
+    const labels = cat.labels || [];
+    const rec = (cat.statistics || []).find(s => Number(s?.season?.year) === season);
+    if (!rec || !Array.isArray(rec.stats)) continue;
+    rec.stats.forEach((val, i) => {
+      const label = labels[i];
+      if (!label) return;
+      const num = parseFloat(val);
+      flat[`${cat.name}.${label}`] = Number.isFinite(num) ? num : 0;
+    });
   }
   return flat;
 }
 
-// Extract the fields the bucketers care about. Defensive — if a field is
-// missing (player didn't play / category absent), it stays 0.
+// Pick out the fields the bucketers care about. GP comes from whichever
+// category the player actually contributed to.
 function extractStats(flat, position) {
+  const games =
+    flat['passing.GP']   ||
+    flat['rushing.GP']   ||
+    flat['receiving.GP'] || 0;
   return {
     position,
-    games: flat.gamesPlayed || 0,
-    // QB
-    attempts:        flat.passingAttempts    || flat.completionsattempts || 0,
-    completions:     flat.completions        || 0,
-    passing_yards:   flat.passingYards       || 0,
-    sacks_suffered:  flat.sacks              || flat.sackedYardsLost || 0,
-    passer_rating:   flat.QBRating           || flat.passerRating || 0,
-    // RB
-    carries:         flat.rushingAttempts    || 0,
-    rushing_yards:   flat.rushingYards       || 0,
-    // WR / TE
-    targets:         flat.receivingTargets   || 0,
-    receptions:      flat.receptions         || 0,
-    receiving_yards: flat.receivingYards     || 0,
+    games,
+    attempts:        flat['passing.ATT']     || 0,
+    completions:     flat['passing.CMP']     || 0,
+    passing_yards:   flat['passing.YDS']     || 0,
+    sacks_suffered:  flat['passing.SACK']    || 0,
+    passer_rating:   flat['passing.RTG']     || 0,
+    carries:         flat['rushing.CAR']     || 0,
+    rushing_yards:   flat['rushing.YDS']     || 0,
+    targets:         flat['receiving.TGTS']  || 0,
+    receptions:      flat['receiving.REC']   || 0,
+    receiving_yards: flat['receiving.YDS']   || 0,
   };
 }
 
@@ -136,33 +145,12 @@ async function main() {
       // an incumbent (volume thresholds in the bucketer filter them out).
       if (DEBUG) console.error(`  ! ${p.name} (${p.espn_id}): ${e.message}`);
     }
-    // Print categories with their labels/names + a sample stat object so we
-    // can see how ESPN keys the values (positional? by name? by abbreviation?).
-    if (!firstRawDump && json) {
-      firstRawDump = true;
-      log(`=== ESPN response audit: ${p.name} (espn_id ${p.espn_id}) ===`);
-      log(`top-level keys: ${Object.keys(json).join(', ')}`);
-      const cats = json.categories || [];
-      cats.forEach((cat, i) => {
-        log(`categories[${i}] name=${cat.name || cat.displayName || '?'}`);
-        const labels = cat.labels || cat.names || cat.abbreviations || cat.displayNames;
-        if (labels) log(`  labels: ${JSON.stringify(labels).slice(0, 400)}`);
-        (cat.statistics || []).forEach((ss, j) => {
-          log(`  statistics[${j}] season=${JSON.stringify(ss.season || ss.team || {})}`);
-          if (Array.isArray(ss.stats) && ss.stats.length) {
-            log(`    stats[0]: ${JSON.stringify(ss.stats[0]).slice(0, 300)}`);
-            log(`    stats[1]: ${JSON.stringify(ss.stats[1]).slice(0, 300)}`);
-            log(`    stats[2]: ${JSON.stringify(ss.stats[2]).slice(0, 300)}`);
-          }
-        });
-      });
-      if (json.glossary) {
-        log(`glossary[0..2]: ${JSON.stringify((json.glossary || []).slice(0, 3)).slice(0, 500)}`);
-      }
-      log('=== end audit ===');
-    }
-    const flat = flattenStats(json);
+    const flat = flattenStats(json, SEASON);
     const stats = extractStats(flat, p.position);
+    if (!firstRawDump && Object.keys(flat).length) {
+      firstRawDump = true;
+      log(`first parsed: ${p.name} (${p.position}) → ${JSON.stringify(stats)}`);
+    }
     done++;
     if (done % 50 === 0) log(`  …${done}/${allPlayers.length}`);
     if (DEBUG && !firstSample && Object.keys(flat).length > 5) {
