@@ -42,7 +42,16 @@ const THRESHOLDS = {
 };
 
 const DRAFT_CAPITAL = { 1: 1.00, 2: 0.75, 3: 0.55, 4: 0.35, 5: 0.20, 6: 0.10, 7: 0.10 };
-const ROOM_FACTOR   = { open: 1.0, contested: 0.6, locked: 0.2 };
+// Per-position room factor. WR is softer when "locked" because NFL offenses
+// run 3-WR base sets every play — a locked WR1 doesn't block a rookie from
+// taking a WR2/WR3 seat. QB / RB / TE rooms have one job each, so locked
+// really does mean blocked.
+const ROOM_FACTOR = {
+  QB: { open: 1.0, contested: 0.6, locked: 0.20 },
+  RB: { open: 1.0, contested: 0.6, locked: 0.20 },
+  WR: { open: 1.0, contested: 0.6, locked: 0.45 },
+  TE: { open: 1.0, contested: 0.6, locked: 0.20 },
+};
 
 // nflverse uses some team codes that differ from ours.
 const NFLVERSE_TO_OURS = { LV: 'LVR', LA: 'LAR', NO: 'NOR' };
@@ -221,7 +230,7 @@ async function main() {
     const teamCode = p.team === 'NEP' ? 'NE' : p.team;
     const room = rooms[teamCode]?.[p.pos] || { status: 'open' };
     const draftCapital = DRAFT_CAPITAL[p.round] ?? 0.10;
-    const roomFactor = ROOM_FACTOR[room.status] ?? 1.0;
+    const roomFactor = ROOM_FACTOR[p.pos]?.[room.status] ?? 1.0;
     const score = +(draftCapital * roomFactor).toFixed(3);
     return {
       key: `${p.pick}-${p.name}-${p.team}`,

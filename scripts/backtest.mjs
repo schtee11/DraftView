@@ -35,7 +35,12 @@ const T = {
 };
 
 const DRAFT_CAPITAL = { 1: 1.00, 2: 0.75, 3: 0.55, 4: 0.35, 5: 0.20, 6: 0.10, 7: 0.10 };
-const ROOM_FACTOR   = { open: 1.0, contested: 0.6, locked: 0.2 };
+const ROOM_FACTOR = {
+  QB: { open: 1.0, contested: 0.6, locked: 0.20 },
+  RB: { open: 1.0, contested: 0.6, locked: 0.20 },
+  WR: { open: 1.0, contested: 0.6, locked: 0.45 },
+  TE: { open: 1.0, contested: 0.6, locked: 0.20 },
+};
 
 const log = (...a) => console.log(...a);
 const num = (v) => (v == null || v === '' ? 0 : Number(v));
@@ -188,7 +193,7 @@ async function main() {
     const status = BUCKETER[pos](players);
     const round = Number(r.round);
     const dc = DRAFT_CAPITAL[round] ?? 0.10;
-    const rf = ROOM_FACTOR[status] ?? 1.0;
+    const rf = ROOM_FACTOR[pos]?.[status] ?? 1.0;
     const score = +(dc * rf).toFixed(3);
     const grade = gradeFor(score);
     const points = ppr.has(r.gsis_id) ? ppr.get(r.gsis_id) : null;
