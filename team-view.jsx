@@ -103,7 +103,10 @@ const TeamView = ({ picks, palette, dark, density, selectedTeam, setSelectedTeam
                     <span className="ov">{p.overall}</span>
                   </div>
                   <div className="team-pick-pos" data-pos={p.pos}>{p.pos}</div>
-                  <div className="team-pick-name">{p.name}</div>
+                  <div className="team-pick-info">
+                    <div className="team-pick-name">{p.name}</div>
+                    {p.school && <div className="team-pick-school">{p.school}</div>}
+                  </div>
                   <div className="team-pick-pick">Pick {p.pick}</div>
                 </div>
               );

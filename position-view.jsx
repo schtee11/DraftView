@@ -61,10 +61,12 @@ const PositionView = ({ picks, palette, dark, density, hoverPick, setHoverPick, 
                     >
                       {p.pick}
                     </div>
-                    <div className="pick-name">{p.name}</div>
+                    <div className="pick-info">
+                      <div className="pick-name">{p.name}</div>
+                      {p.school && <div className="pick-school">{p.school}</div>}
+                    </div>
                     <div className="pick-team">
-                      <TeamBadge code={p.team} size={density === 'compact' ? 22 : 26} ring={false} />
-                      <span className="pick-team-code">{p.team}</span>
+                      <TeamBadge code={p.team} size={density === 'compact' ? 24 : 28} ring={false} />
                     </div>
                   </div>
                 );
