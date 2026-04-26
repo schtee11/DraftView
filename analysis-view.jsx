@@ -17,7 +17,7 @@ const STATUS_COLOR = {
   locked:    { bg: 'oklch(92% 0.05 25)',  fg: 'oklch(40% 0.13 25)'  },
 };
 
-const POSITIONS = ['QB', 'RB', 'WR', 'TE'];
+const ANALYSIS_POSITIONS = ['QB', 'RB', 'WR', 'TE'];
 
 const AnalysisView = ({ search, palette, dark, density, hoverPick, setHoverPick }) => {
   const data = window.ANALYSIS_DATA;
@@ -98,7 +98,7 @@ const AnalysisView = ({ search, palette, dark, density, hoverPick, setHoverPick 
               className={`pos-chip${posFilter === 'all' ? ' is-active' : ''}`}
               onClick={() => setPosFilter('all')}
             >All</button>
-            {POSITIONS.map(p => (
+            {ANALYSIS_POSITIONS.map(p => (
               <button
                 key={p}
                 type="button"
