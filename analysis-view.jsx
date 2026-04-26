@@ -322,9 +322,15 @@ async function fetchTeamDepthChart(slug, dumpFirst) {
 // stats lookup. Depth chart wins on ordering (it's the team's official
 // answer); stats are still used for the secondary "is anyone dominant?"
 // signal and for the per-incumbent display.
-function buildRoom(roster, depthChart, position, statsLookup) {
+//
+// rookieNames is a Set of lowercased 2026 rookie names — we strip them from
+// the roster so the rookie being analyzed doesn't appear as their own
+// competition (and so other 2026 rookies don't either, since they haven't
+// played as pros yet and would clutter the depth chart with zero-stat rows).
+function buildRoom(roster, depthChart, position, statsLookup, rookieNames) {
   const players = roster
     .filter(p => p.position === position)
+    .filter(p => !rookieNames.has((p.name || '').trim().toLowerCase()))
     .map(p => {
       const s = statsLookup[p.espn_id];
       return { ...(s || { games: 0 }), espn_id: p.espn_id, name: p.name, position };
@@ -369,6 +375,13 @@ const AnalysisView = ({ search, palette, dark, hoverPick, setHoverPick }) => {
     return () => { cancelled = true; };
   }, [teams]);
 
+  // 2026 rookie names — used to strip them out of every team's depth chart so
+  // a rookie never appears as their own competition.
+  const rookieNames = useMemo(
+    () => new Set(window.DRAFT_DATA.picks.map(p => (p.name || '').trim().toLowerCase())),
+    []
+  );
+
   const rooms = useMemo(() => {
     if (!teamData || !stats) return null;
     const out = {};
@@ -379,12 +392,13 @@ const AnalysisView = ({ search, palette, dark, hoverPick, setHoverPick }) => {
           teamData[code].roster,
           teamData[code].depthChart,
           pos,
-          stats.byEspnId
+          stats.byEspnId,
+          rookieNames
         );
       }
     }
     return out;
-  }, [teamData, stats]);
+  }, [teamData, stats, rookieNames]);
 
   if (!stats) {
     return (
