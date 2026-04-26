@@ -136,13 +136,38 @@ async function main() {
       // an incumbent (volume thresholds in the bucketer filter them out).
       if (DEBUG) console.error(`  ! ${p.name} (${p.espn_id}): ${e.message}`);
     }
-    // One-time dump of the raw API response so we can audit ESPN's actual
-    // field names if the validation step says we're parsing zeros.
+    // One-time structural audit of ESPN's response: print top-level keys
+    // and the path of every nested `stats` array we find. Tells us exactly
+    // where the player's per-stat values live without dumping a giant blob.
     if (!firstRawDump && json) {
       firstRawDump = true;
-      log(`=== sample raw response: ${p.name} (espn_id ${p.espn_id}) ===`);
-      console.log(JSON.stringify(json).slice(0, 6000));
-      log('=== end sample ===');
+      log(`=== ESPN response audit: ${p.name} (espn_id ${p.espn_id}) ===`);
+      log(`top-level keys: ${Object.keys(json).join(', ')}`);
+      const found = [];
+      const walk = (node, path) => {
+        if (!node || typeof node !== 'object') return;
+        if (Array.isArray(node)) {
+          node.forEach((it, i) => walk(it, `${path}[${i}]`));
+          return;
+        }
+        if (Array.isArray(node.stats) && node.stats.length) {
+          const sampleNames = node.stats.slice(0, 6).map(s => s?.name).filter(Boolean);
+          found.push({ path: path || '<root>', count: node.stats.length, sample: sampleNames });
+        }
+        for (const k of Object.keys(node)) walk(node[k], path ? `${path}.${k}` : k);
+      };
+      walk(json, '');
+      if (found.length === 0) {
+        log('  no `stats` arrays found anywhere in the response.');
+        log(`  full JSON (truncated):`);
+        console.log(JSON.stringify(json).slice(0, 8000));
+      } else {
+        for (const f of found) {
+          log(`  stats[] at path: ${f.path}  (${f.count} items)`);
+          log(`    sample names: ${f.sample.join(', ')}`);
+        }
+      }
+      log('=== end audit ===');
     }
     const flat = flattenStats(json);
     const stats = extractStats(flat, p.position);
