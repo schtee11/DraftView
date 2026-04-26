@@ -1005,12 +1005,113 @@ body {
 }
 
 @media (max-width: 720px) {
-  .app { padding: 18px 14px 80px; }
-  .topbar { flex-direction: column; align-items: flex-start; gap: 12px; }
-  .brand-title { font-size: 26px; }
-  .team-detail { padding: 18px; }
-  .team-pick-row { grid-template-columns: 64px 44px 1fr; }
-  .team-pick-pick { display: none; }
+  .app { padding: 16px 14px 80px; }
+
+  /* Topbar: brand on top, actions row beneath spanning full width */
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding-bottom: 16px;
+  }
+  .brand-title { font-size: 24px; }
+  .topbar-actions {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .view-toggle { flex: 1 1 auto; }
+  .view-toggle button {
+    flex: 1 1 0;
+    padding: 8px 10px;
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+  .tweaks-trigger { padding: 8px 12px; font-size: 12px; }
+
+  /* Filters: search full-width, round pills horizontally scrollable */
+  .filters { gap: 10px; }
+  .search-box { flex: 1 1 100%; max-width: none; }
+  .round-filter {
+    flex: 1 1 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+  }
+  .round-filter::-webkit-scrollbar { display: none; }
+  .round-pill {
+    flex-shrink: 0;
+    padding: 7px 12px;
+  }
+  .round-filter-label { flex-shrink: 0; }
+  .team-select { flex: 1 1 100%; }
+  .team-select select { width: 100%; }
+  .results-count {
+    margin-left: 0;
+    width: 100%;
+    text-align: right;
+  }
+
+  /* Round legend: wrap to 3 per row, then 2 if very narrow */
   .round-legend { flex-wrap: wrap; }
   .round-legend-item { flex: 1 0 33%; }
+
+  /* Position view: cards span full width below 640 already; tighten chrome */
+  .pos-header { padding: 12px 14px; }
+  .pos-title { font-size: 17px; }
+
+  /* Team view: smaller tiles, scroll the strip horizontally */
+  .team-strip {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .team-strip::-webkit-scrollbar { display: none; }
+  .team-tile { width: 64px; padding: 6px 4px; }
+  .team-detail { padding: 16px; }
+  .team-detail-header { gap: 14px; padding-bottom: 16px; margin-bottom: 14px; }
+  .team-detail-name { font-size: 26px; }
+  .stat { padding: 6px 10px; min-width: 54px; }
+  .stat-value { font-size: 18px; }
+  .team-pick-row {
+    grid-template-columns: 64px 40px 1fr;
+    gap: 12px;
+    padding: 12px 4px;
+  }
+  .team-pick-pick { display: none; }
+  .team-pick-name { font-size: 17px; }
+  .team-pick-num .ov { font-size: 15px; }
+
+  /* Analysis depth-chart rows */
+  .dc-row { padding: 14px; gap: 10px; }
+  .dc-rookie { gap: 10px; }
+  .dc-pick { min-width: 48px; padding: 5px 6px; }
+  .dc-pick .ov { font-size: 16px; }
+  .dc-rookie-name { font-size: 17px; }
+  .dc-room-team { font-size: 14px; }
+  .dc-incumbent {
+    grid-template-columns: 16px 1fr auto;
+    gap: 8px;
+  }
+  .dc-incumbent-stat.secondary { display: none; }
+  .dc-incumbent-name { font-size: 13px; }
+}
+
+@media (max-width: 420px) {
+  .brand-title { font-size: 21px; }
+  .pos-title { font-size: 15px; }
+  .pos-header { padding: 10px 12px; }
+  .pick-row { padding: 8px 12px !important; }
+  .team-tile { width: 56px; }
+  .team-detail-name { font-size: 22px; }
+  .team-pick-row { grid-template-columns: 54px 36px 1fr; gap: 10px; }
+  .dc-row { padding: 12px; }
+  .dc-rookie-name { font-size: 16px; }
+  .round-legend-item { flex: 1 0 50%; }
 }
