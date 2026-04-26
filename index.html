@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NFL Draft — Fantasy Skill-Position Board</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- React + Babel (pinned) -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+  <!-- Data + helpers -->
+  <script src="data.js"></script>
+  <script src="palettes.js"></script>
+
+  <!-- Tweaks shell -->
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+
+  <!-- Components -->
+  <script type="text/babel" src="team-badge.jsx"></script>
+  <script type="text/babel" src="position-view.jsx"></script>
+  <script type="text/babel" src="team-view.jsx"></script>
+
+  <!-- App -->
+  <script type="text/babel" src="app.jsx"></script>
+</body>
+</html>
