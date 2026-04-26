@@ -1,0 +1,66 @@
+name: Refresh stats.js
+
+# Pulls 2025 NFL stats from ESPN and commits an updated stats.js back to this
+# branch. Runs weekly on Tuesday mornings (after Sunday + Monday games have
+# settled) and on manual dispatch from the Actions tab.
+
+on:
+  schedule:
+    - cron: '0 13 * * 2'  # 13:00 UTC Tuesdays ≈ 9am ET / 6am PT
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/implement-nfl-draft-viewer-9o0Js
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build stats.js
+        run: node scripts/build-analysis.mjs
+
+      # Sanity check — abort if the build looks broken (ESPN schema change,
+      # rate-limited, etc.). Better to skip a refresh than push zeros to prod.
+      - name: Validate stats.js
+        run: |
+          node -e '
+            const fs = require("fs");
+            const w = {};
+            new Function("window", fs.readFileSync("stats.js","utf8"))(w);
+            const all = Object.values(w.STATS.byEspnId);
+            const productive = all.filter(p =>
+              (p.attempts || 0) > 0 || (p.carries || 0) > 0 || (p.targets || 0) > 0
+            );
+            const ratio = all.length ? productive.length / all.length : 0;
+            console.log(`Players written: ${all.length}`);
+            console.log(`With non-zero production: ${productive.length} (${(ratio*100).toFixed(1)}%)`);
+            if (all.length < 200) {
+              console.error(`Sanity check failed: only ${all.length} players written (expected ≥200).`);
+              process.exit(1);
+            }
+            if (ratio < 0.30) {
+              console.error(`Sanity check failed: only ${(ratio*100).toFixed(1)}% of players have stats (expected ≥30%). ESPN field names may have changed.`);
+              process.exit(1);
+            }
+          '
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet stats.js; then
+            echo "No changes to stats.js — skipping commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add stats.js
+          git commit -m "Refresh stats.js ($(date -u +'%Y-%m-%d'))"
+          git push origin HEAD:claude/implement-nfl-draft-viewer-9o0Js
