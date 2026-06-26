@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yard Maintenance Tracker</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f0f4f0;
+      --surface: #ffffff;
+      --border: #d8e4d8;
+      --text: #1a2e1a;
+      --text-muted: #5a7a5a;
+      --green: #2e7d32;
+      --green-light: #e8f5e9;
+      --yellow: #f57f17;
+      --yellow-light: #fff8e1;
+      --red: #c62828;
+      --red-light: #ffebee;
+      --accent: #388e3c;
+      --radius: 10px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--accent);
+      color: #fff;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    header span { font-size: 0.85rem; opacity: 0.85; }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 16px;
+    }
+
+    /* --- Log Form --- */
+    .log-form {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 28px;
+    }
+
+    .log-form h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+      color: var(--accent);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .form-row select,
+    .form-row input[type="date"],
+    .form-row input[type="text"] {
+      flex: 1;
+      min-width: 140px;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      color: var(--text);
+      background: #fafafa;
+      outline: none;
+    }
+
+    .form-row select:focus,
+    .form-row input:focus {
+      border-color: var(--accent);
+      background: #fff;
+    }
+
+    .form-row input[type="text"] { flex: 2; min-width: 180px; }
+
+    .btn-log {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 9px 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .btn-log:hover { background: var(--green); }
+
+    /* --- Dashboard Grid --- */
+    .section-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .task-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .task-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: box-shadow 0.15s;
+      border-left: 4px solid var(--border);
+    }
+
+    .task-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+
+    .task-card.status-good  { border-left-color: var(--green); }
+    .task-card.status-due   { border-left-color: var(--yellow); }
+    .task-card.status-late  { border-left-color: var(--red); }
+    .task-card.status-never { border-left-color: #aaa; }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .task-icon { font-size: 1.4rem; }
+
+    .status-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+
+    .status-good  .status-badge { background: var(--green-light);  color: var(--green); }
+    .status-due   .status-badge { background: var(--yellow-light); color: var(--yellow); }
+    .status-late  .status-badge { background: var(--red-light);    color: var(--red); }
+    .status-never .status-badge { background: #f0f0f0; color: #888; }
+
+    .task-name {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .task-meta {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .task-days {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .status-good  .task-days { color: var(--green); }
+    .status-due   .task-days { color: var(--yellow); }
+    .status-late  .task-days { color: var(--red); }
+    .status-never .task-days { color: #aaa; }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+
+    .btn-quick {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 5px;
+      border: 1px solid var(--accent);
+      background: transparent;
+      color: var(--accent);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-quick:hover { background: var(--accent); color: #fff; }
+
+    .interval-hint {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* --- Activity Log --- */
+    .log-list {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .log-list-header {
+      display: grid;
+      grid-template-columns: 110px 1fr 140px 32px;
+      gap: 10px;
+      padding: 10px 16px;
+      background: #f5f8f5;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .log-entry {
+      display: grid;
+      grid-template-columns: 110px 1fr 140px 32px;
+      gap: 10px;
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+      align-items: center;
+      transition: background 0.1s;
+    }
+
+    .log-entry:last-child { border-bottom: none; }
+    .log-entry:hover { background: #f9fbf9; }
+
+    .log-task { font-weight: 600; }
+    .log-icon { margin-right: 6px; }
+    .log-date { color: var(--text-muted); }
+    .log-notes { color: var(--text-muted); font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .btn-delete {
+      background: none;
+      border: none;
+      color: #ccc;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0;
+      line-height: 1;
+      transition: color 0.15s;
+    }
+
+    .btn-delete:hover { color: var(--red); }
+
+    .empty-log {
+      padding: 32px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #333;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 24px;
+      font-size: 0.85rem;
+      transition: transform 0.25s ease;
+      z-index: 999;
+    }
+
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 500px) {
+      .log-list-header,
+      .log-entry { grid-template-columns: 90px 1fr 80px 28px; }
+      .log-notes { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>&#127807; Yard Maintenance</h1>
+  <span id="header-date"></span>
+</header>
+
+<div class="container">
+
+  <!-- Log Form -->
+  <div class="log-form">
+    <h2>Log Activity</h2>
+    <div class="form-row">
+      <select id="form-task">
+        <option value="">-- Select task --</option>
+      </select>
+      <input type="date" id="form-date" />
+      <input type="text" id="form-notes" placeholder="Notes (optional)" />
+      <button class="btn-log" onclick="logActivity()">Log</button>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="section-title">Dashboard</div>
+  <div class="task-grid" id="task-grid"></div>
+
+  <!-- History -->
+  <div class="section-title">Recent Activity</div>
+  <div class="log-list" id="log-list"></div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const TASKS = [
+    { id: 'mowing',      name: 'Mowing',      icon: '&#x1F3A1;', interval: 7  },
+    { id: 'watering',    name: 'Watering',    icon: '&#x1F4A7;', interval: 3  },
+    { id: 'fertilizing', name: 'Fertilizing', icon: '&#x1F331;', interval: 30 },
+    { id: 'weeding',     name: 'Weeding',     icon: '&#x1F33F;', interval: 14 },
+    { id: 'edging',      name: 'Edging',      icon: '&#x2702;&#xFE0F;', interval: 14 },
+    { id: 'mulching',    name: 'Mulching',    icon: '&#x1F7EB;', interval: 90 },
+    { id: 'pruning',     name: 'Pruning',     icon: '&#x2704;&#xFE0F;', interval: 60 },
+    { id: 'seeding',     name: 'Seeding',     icon: '&#x1F33E;', interval: 90 },
+    { id: 'aerating',    name: 'Aerating',    icon: '&#x1F344;', interval: 180 },
+    { id: 'other',       name: 'Other',       icon: '&#x1F527;', interval: null },
+  ];
+
+  const STORAGE_KEY = 'yard-maintenance-log';
+
+  function loadLog() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch { return []; }
+  }
+
+  function saveLog(log) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(log));
+  }
+
+  function today() {
+    return new Date().toISOString().slice(0, 10);
+  }
+
+  function daysBetween(dateStr) {
+    if (!dateStr) return null;
+    const ms = Date.now() - new Date(dateStr + 'T12:00:00').getTime();
+    return Math.floor(ms / 86400000);
+  }
+
+  function formatDate(dateStr) {
+    if (!dateStr) return '—';
+    const [y, m, d] = dateStr.split('-');
+    return `${m}/${d}/${y}`;
+  }
+
+  function getStatus(days, interval) {
+    if (days === null) return 'never';
+    if (!interval) return 'good';
+    if (days <= interval * 0.5)  return 'good';
+    if (days <= interval)        return 'due';
+    return 'late';
+  }
+
+  function statusLabel(status) {
+    return { good: 'Good', due: 'Due Soon', late: 'Overdue', never: 'Never Done' }[status];
+  }
+
+  function getLastDone(log) {
+    const map = {};
+    for (const entry of log) {
+      if (!map[entry.task] || entry.date > map[entry.task]) {
+        map[entry.task] = entry.date;
+      }
+    }
+    return map;
+  }
+
+  function renderDashboard() {
+    const log = loadLog();
+    const lastDone = getLastDone(log);
+    const grid = document.getElementById('task-grid');
+    grid.innerHTML = '';
+
+    for (const task of TASKS) {
+      const date = lastDone[task.id] || null;
+      const days = daysBetween(date);
+      const status = getStatus(days, task.interval);
+
+      const daysText = days === null
+        ? '—'
+        : days === 0 ? 'Today'
+        : days === 1 ? '1 day ago'
+        : `${days} days ago`;
+
+      const intervalHint = task.interval
+        ? `Every ~${task.interval} day${task.interval > 1 ? 's' : ''}`
+        : 'No interval set';
+
+      const card = document.createElement('div');
+      card.className = `task-card status-${status}`;
+      card.innerHTML = `
+        <div class="card-header">
+          <span class="task-icon">${task.icon}</span>
+          <span class="status-badge">${statusLabel(status)}</span>
+        </div>
+        <div class="task-name">${task.name}</div>
+        <div class="task-days">${daysText}</div>
+        <div class="task-meta">${date ? 'Last: ' + formatDate(date) : 'No record yet'}</div>
+        <div class="card-footer">
+          <button class="btn-quick" onclick="quickLog('${task.id}')">Log Today</button>
+          <span class="interval-hint">${intervalHint}</span>
+        </div>
+      `;
+      grid.appendChild(card);
+    }
+  }
+
+  function renderLog() {
+    const log = loadLog().slice().reverse();
+    const container = document.getElementById('log-list');
+
+    if (log.length === 0) {
+      container.innerHTML = '<div class="empty-log">No activities logged yet. Start by logging a task above.</div>';
+      return;
+    }
+
+    const header = `
+      <div class="log-list-header">
+        <span>Date</span>
+        <span>Task</span>
+        <span>Notes</span>
+        <span></span>
+      </div>`;
+
+    const rows = log.map((entry, i) => {
+      const task = TASKS.find(t => t.id === entry.task);
+      const icon = task ? task.icon : '';
+      const name = task ? task.name : entry.task;
+      const realIndex = log.length - 1 - i;
+      return `
+        <div class="log-entry">
+          <span class="log-date">${formatDate(entry.date)}</span>
+          <span class="log-task"><span class="log-icon">${icon}</span>${name}</span>
+          <span class="log-notes">${entry.notes || ''}</span>
+          <button class="btn-delete" onclick="deleteEntry(${realIndex})" title="Delete">&#x2715;</button>
+        </div>`;
+    }).join('');
+
+    container.innerHTML = header + rows;
+  }
+
+  function render() {
+    renderDashboard();
+    renderLog();
+  }
+
+  function logActivity() {
+    const taskEl  = document.getElementById('form-task');
+    const dateEl  = document.getElementById('form-date');
+    const notesEl = document.getElementById('form-notes');
+
+    const taskId = taskEl.value;
+    const date   = dateEl.value;
+    const notes  = notesEl.value.trim();
+
+    if (!taskId) { showToast('Please select a task.'); return; }
+    if (!date)   { showToast('Please pick a date.'); return; }
+
+    const log = loadLog();
+    log.push({ task: taskId, date, notes });
+    saveLog(log);
+
+    taskEl.value  = '';
+    notesEl.value = '';
+
+    const task = TASKS.find(t => t.id === taskId);
+    showToast(`${task ? task.name : taskId} logged!`);
+    render();
+  }
+
+  function quickLog(taskId) {
+    const log = loadLog();
+    log.push({ task: taskId, date: today(), notes: '' });
+    saveLog(log);
+    const task = TASKS.find(t => t.id === taskId);
+    showToast(`${task ? task.name : taskId} logged for today!`);
+    render();
+  }
+
+  function deleteEntry(index) {
+    const log = loadLog();
+    log.splice(index, 1);
+    saveLog(log);
+    render();
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  function populateForm() {
+    const sel = document.getElementById('form-task');
+    for (const task of TASKS) {
+      const opt = document.createElement('option');
+      opt.value = task.id;
+      opt.textContent = task.name;
+      sel.appendChild(opt);
+    }
+    document.getElementById('form-date').value = today();
+  }
+
+  function setHeaderDate() {
+    const d = new Date();
+    document.getElementById('header-date').textContent =
+      d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  }
+
+  populateForm();
+  setHeaderDate();
+  render();
+</script>
+</body>
+</html>
